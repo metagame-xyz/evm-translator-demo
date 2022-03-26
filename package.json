@@ -4,8 +4,8 @@
         "dev": "next",
         "build": "next build",
         "start": "next start",
-        "format": "prettier --write \"**/*.ts\"",
-        "lint": "eslint --ignore-path .eslintignore --ext .js,.ts .",
+        "format": "prettier --write \"**/*.ts\" \"**/*.tsx\"",
+        "lint": "eslint --ignore-path .eslintignore --ext .ts,.tsx .",
         "type-check": "tsc"
     },
     "dependencies": {
