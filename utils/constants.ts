@@ -1,1 +1,6 @@
 export const COVALENT_API_KEY = process.env.COVALENT_KEY
+export const ALCHEMY_PROJECT_ID = process.env.NEXT_PUBLIC_ALCHEMY_PROJECT_ID
+export const INFURA_PROJECT_ID = process.env.NEXT_PUBLIC_INFURA_PROJECT_ID
+export const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY
+export const POCKET_NETWORK_ID = process.env.POCKET_NETWORK_ID
+export const POCKET_NETWORK_API_KEY = process.env.POCKET_NETWORK_API_KEY
