@@ -41,11 +41,18 @@ export const getServerSideProps = async () => {
 const ReactJson = dynamic(() => import('react-json-view'), { ssr: false })
 
 const IndexPage = ({ tx }) => (
-    <Layout title="EVM Translator Demo">
+    <>
         <h1>single tx</h1>
         {console.log(tx)}
-        <ReactJson src={tx} name={false} theme={'paraiso'} iconStyle={'triangle'} displayDataTypes={false} />
-    </Layout>
+        <ReactJson
+            src={tx}
+            name={false}
+            theme={'paraiso'}
+            iconStyle={'triangle'}
+            displayDataTypes={false}
+            enableClipboard={false}
+        />
+    </>
 )
 
 export default IndexPage
