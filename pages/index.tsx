@@ -29,7 +29,7 @@ const IndexPage = () => {
             )
 
             console.log(data)
-            setTxData(data)
+            setTxData(data.tx)
             setIsLoading(false)
         }
     }
