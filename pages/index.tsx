@@ -91,6 +91,7 @@ const IndexPage = () => {
                     iconStyle={'triangle'}
                     displayDataTypes={false}
                     enableClipboard={false}
+                    displayObjectSize={false}
                 />
             </Box>
         </Box>
