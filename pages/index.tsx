@@ -5,7 +5,7 @@ import { useState } from 'react'
 const ReactJson = dynamic(() => import('react-json-view'), { ssr: false })
 
 const IndexPage = () => {
-    const [txHash, setTxHash] = useState('')
+    const [txHash, setTxHash] = useState('0x11dcc41c833868064028af07fae001acdd4a46f10555be7bde959e57fd5c8e3b')
     const [userAddress, setUserAddress] = useState('')
     const [txData, setTxData] = useState<any>({})
     const [isLoading, setIsLoading] = useState(false)
