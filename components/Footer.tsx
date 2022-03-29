@@ -22,13 +22,13 @@ export default function Footer(props) {
                 <Stack direction={['column', 'column', 'row']} spacing={2} align="center" justify="center">
                     <TwelveCircles boxSize={8} color="white" />
                     {/* pt=1 cuz this font sits too high */}
-                    <Center fontFamily="courier prime" pt={1} fontSize={['sm', 'md', 'xl', 'xl']}>
+                    {/* <Center fontFamily="courier prime" pt={1} fontSize={['sm', 'md', 'xl', 'xl']}>
                         The Metagame
-                    </Center>
+                    </Center> */}
                 </Stack>
-                <Stack direction={'row'} spacing={2} align="center" justify="flex-end" color="brand.100">
+                {/* <Stack direction={'row'} spacing={2} align="center" justify="flex-end" color="brand.100">
                     <Twitter boxSize={[6, 8]} _hover={hover} boxShadow={''} />
-                </Stack>
+                </Stack> */}
             </Grid>
         </Flex>
     )

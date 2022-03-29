@@ -23,7 +23,7 @@ function App({ Component, pageProps }: AppProps): JSX.Element {
         return (
             <ChakraProvider theme={theme}>
                 {/* <EthereumProvider> */}
-                <Flex bgColor="brand.100opaque" width="100%">
+                <Flex bgColor="brand.100opaque" width="100%" minH="100vh">
                     <Layout>
                         <Component {...pageProps} />
                     </Layout>
