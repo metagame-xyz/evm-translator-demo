@@ -5,23 +5,41 @@ import { useState } from 'react'
 const ReactJson = dynamic(() => import('react-json-view'), { ssr: false })
 
 const IndexPage = () => {
-    const [txHash, setTxHash] = useState('0x11dcc41c833868064028af07fae001acdd4a46f10555be7bde959e57fd5c8e3b')
-    const [userAddress, setUserAddress] = useState('')
+    // const [txHash, setTxHash] = useState('0x11dcc41c833868064028af07fae001acdd4a46f10555be7bde959e57fd5c8e3b')
+    const [txHash, setTxHash] = useState('')
+    const [userAddress, setUserAddress] = useState('0x17A059B6B0C8af433032d554B0392995155452E6')
     const [txData, setTxData] = useState<any>({})
     const [isLoading, setIsLoading] = useState(false)
 
     const validTxhash = new RegExp(/^0x[a-fA-F0-9]{64}$/)
     const validAddress = new RegExp(/^0x[a-fA-F0-9]{40}$/)
 
+    // const handleSubmit = async (e) => {
+    //     e.preventDefault()
+
+    //     if (validTxhash.test(txHash)) {
+    //         let apiUrl = `/api/tx/${txHash}`
+
+    //         if (validAddress.test(userAddress)) {
+    //             apiUrl += userAddress ? `?userAddress=${userAddress}` : ''
+    //         }
+
+    //         setIsLoading(true)
+    //         const data = await fetch(apiUrl, { headers: { 'Content-Type': 'application/json' } }).then((res) =>
+    //             res.json(),
+    //         )
+
+    //         console.log(data)
+    //         setTxData(data.tx)
+    //         setIsLoading(false)
+    //     }
+    // }
+
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        if (validTxhash.test(txHash)) {
-            let apiUrl = `/api/tx/${txHash}`
-
-            if (validAddress.test(userAddress)) {
-                apiUrl += userAddress ? `?userAddress=${userAddress}` : ''
-            }
+        if (validAddress.test(userAddress)) {
+            let apiUrl = `/api/address/${userAddress}`
 
             setIsLoading(true)
             const data = await fetch(apiUrl, { headers: { 'Content-Type': 'application/json' } }).then((res) =>
@@ -29,7 +47,7 @@ const IndexPage = () => {
             )
 
             console.log(data)
-            setTxData(data.tx)
+            setTxData(data.txArr)
             setIsLoading(false)
         }
     }

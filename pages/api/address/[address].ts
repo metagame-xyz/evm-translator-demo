@@ -12,8 +12,7 @@ import {
 
 const handler = async (_req: NextApiRequest, res: NextApiResponse) => {
     try {
-        const txHash = _req.query.txHash as string
-        const userAddress = _req.query.userAddress as Address
+        const address = _req.query.address as Address
 
         const etherskeys = createEthersAPIKeyObj(
             ALCHEMY_PROJECT_ID,
@@ -29,8 +28,8 @@ const handler = async (_req: NextApiRequest, res: NextApiResponse) => {
             ethersApiKeys: etherskeys,
         })
 
-        const tx = await translator.translateFromHash(txHash, userAddress)
-        res.status(200).json({ tx })
+        const txArr = await translator.translateFromAddress(address, true, 100)
+        res.status(200).json({ txArr })
     } catch (err: any) {
         res.status(500).json({ statusCode: 500, message: err.message })
     }
