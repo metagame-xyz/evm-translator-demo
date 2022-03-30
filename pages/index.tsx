@@ -56,10 +56,10 @@ const IndexPage = () => {
         <Box m="4">
             <Box mx="auto" maxW="1280px">
                 <Flex alignItems="center" justify="center" m="4">
-                    <Heading>Single Transaction</Heading>
+                    <Heading>By User Address (last 100 txs, filtered by outgoing only)</Heading>
                 </Flex>
                 <SimpleGrid columns={[1, 1, 1, 3]} spacing="2" alignItems="center">
-                    <Input
+                    {/* <Input
                         placeholder="tx Hash"
                         borderColor="brand.400"
                         type="text"
@@ -68,7 +68,7 @@ const IndexPage = () => {
                         my="2"
                         value={txHash}
                         onChange={(e) => setTxHash(e.currentTarget.value)}
-                    />
+                    /> */}
                     <Input
                         placeholder="user Address (optional)"
                         type="text"
