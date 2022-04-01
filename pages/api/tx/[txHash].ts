@@ -30,6 +30,7 @@ const handler = async (_req: NextApiRequest, res: NextApiResponse) => {
         })
 
         const tx = await translator.translateFromHash(txHash, userAddress)
+
         res.status(200).json({ tx })
     } catch (err: any) {
         res.status(500).json({ statusCode: 500, message: err.message })
