@@ -1,4 +1,18 @@
-import { Box, Button, Center, Flex, FormControl, Heading, Input, SimpleGrid, Stack } from '@chakra-ui/react'
+import { ExternalLinkIcon } from '@chakra-ui/icons'
+import {
+    Box,
+    Button,
+    Center,
+    Flex,
+    FormControl,
+    Heading,
+    Input,
+    Link,
+    SimpleGrid,
+    Stack,
+    Text,
+    VStack,
+} from '@chakra-ui/react'
 import dynamic from 'next/dynamic'
 import { useState } from 'react'
 
@@ -78,57 +92,81 @@ const IndexPage = () => {
     }
 
     const dataToShow = Object.keys(txData).length > 0 ? txData : { decoded, interpreted }
+    let etherscanLink = ''
+    if (txHash) {
+        etherscanLink = `https://www.etherscan.io/tx/${txHash}`
+    } else if (userAddress) {
+        etherscanLink = `https://www.etherscan.io/address/${userAddress}`
+    } else {
+        etherscanLink = ''
+    }
 
     return (
         <Box m="4">
             <Box mx="auto" maxW="1280px">
-                <Flex alignItems="center" justify="center" m="4">
-                    <Heading>By User Address (last 100 txs, filtered by outgoing only)</Heading>
-                </Flex>
-                <SimpleGrid columns={[1, 1, 1, 3]} spacing="2" alignItems="center">
-                    <Input
-                        placeholder="tx Hash"
-                        borderColor="brand.400"
-                        type="text"
-                        maxW="80%"
-                        mx="auto"
-                        my="2"
-                        value={txHash}
-                        onChange={(e) => setTxHash(e.currentTarget.value)}
-                    />
-                    <Input
-                        placeholder="user Address (optional)"
-                        type="text"
-                        m="2"
-                        my="2"
-                        maxW="80%"
-                        mx="auto"
-                        borderColor="brand.400"
-                        value={userAddress}
-                        onChange={(e) => setUserAddress(e.currentTarget.value)}
-                    />
-                    <Button
-                        isLoading={isLoading}
-                        isDisabled={isLoading}
-                        loadingText="loading..."
-                        fontWeight="normal"
-                        colorScheme="brand"
-                        bgColor="brand.600"
-                        maxW="80%"
-                        mx="auto"
-                        my="2"
-                        // color="brand.900"
-                        _hover={{ bg: 'brand.500' }}
-                        size="md"
-                        // height="60px"
-                        minW="xs"
-                        // boxShadow="lg"
-                        fontSize="lg"
-                        onClick={handleSubmit}
-                    >
-                        Get Interpretation
-                    </Button>
-                </SimpleGrid>
+                <VStack alignItems="center" justify="center" m="4">
+                    <Heading>Query Options</Heading>
+                    <Box>
+                        <Text mx="auto" mb="2">
+                            1. Just a tx hash <br />
+                            2. A tx hash + the user address for context (defaults to the from address) <br />
+                            3. An EOA address, which will return all txns initiated by that address
+                        </Text>
+                    </Box>
+                </VStack>
+                <form>
+                    <SimpleGrid columns={[1, 1, 1, 1]} spacing="2" alignItems="center">
+                        <Input
+                            placeholder="tx Hash"
+                            borderColor="brand.400"
+                            type="text"
+                            maxW="80%"
+                            mx="auto"
+                            my="2"
+                            value={txHash}
+                            onChange={(e) => setTxHash(e.currentTarget.value)}
+                        />
+                        <Input
+                            placeholder="user Address (optional)"
+                            type="text"
+                            my="2"
+                            maxW="80%"
+                            mx="auto"
+                            borderColor="brand.400"
+                            value={userAddress}
+                            onChange={(e) => setUserAddress(e.currentTarget.value)}
+                        />
+                        <Button
+                            isLoading={isLoading}
+                            isDisabled={isLoading}
+                            loadingText="loading..."
+                            fontWeight="normal"
+                            colorScheme="brand"
+                            bgColor="brand.600"
+                            maxW="80%"
+                            mx="auto"
+                            mb="4"
+                            // color="brand.900"
+                            _hover={{ bg: 'brand.500' }}
+                            // size="md"
+                            // height="60px"
+                            minW="xs"
+                            // boxShadow="lg"
+                            fontSize="lg"
+                            type="submit"
+                            onClick={handleSubmit}
+                        >
+                            Get Interpretation
+                        </Button>
+                        {etherscanLink ? (
+                            <Text mx="auto" mb="2">
+                                <Link isExternal href={etherscanLink}>
+                                    etherscan link <ExternalLinkIcon mx="2px" />
+                                </Link>
+                            </Text>
+                        ) : null}
+                    </SimpleGrid>
+                </form>
                 <ReactJson
                     src={dataToShow}
                     name={false}

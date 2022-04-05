@@ -9,14 +9,15 @@
         "type-check": "tsc"
     },
     "dependencies": {
+        "@chakra-ui/icons": "^1.1.7",
         "@chakra-ui/react": "^1.8.7",
         "@emotion/react": "^11",
         "@emotion/styled": "^11",
         "@fontsource/courier-prime": "^4.5.6",
         "@fontsource/lato": "^4.5.5",
-        "evm-translator": "^0.1.4",
+        "evm-translator": "^0.2.0",
         "framer-motion": "^6",
-        "next": "latest",
+        "next": "^12.1.4",
         "react": "^17.0.2",
         "react-dom": "^17.0.2",
         "react-json-view": "^1.21.3"
