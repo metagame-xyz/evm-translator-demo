@@ -2282,15 +2282,16 @@ ethers@^5.6.2:
     "@ethersproject/web" "5.6.0"
     "@ethersproject/wordlists" "5.6.0"
 
-evm-translator@0.2.1:
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/evm-translator/-/evm-translator-0.2.1.tgz#80dbba79b08ebc7ac44855e245e49fe6ce1dccfd"
-  integrity sha512-sk/030fwmVY30tS5ZHwm1oskRlaR8ZTSuoSwpp1Qg6YAwGg+j2YZsJp/TmxD/zLkGOMS3bNjXK1HBefbHHa77g==
+evm-translator@^0.2.2:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/evm-translator/-/evm-translator-0.2.2.tgz#fb814ae7125d6be7f6862cf517f35561e527bedd"
+  integrity sha512-EDLiOkcUe172POMv3pCOKk/S6yBSi5duq1mqdDjzwaq7N5F6GV428HvgZLxHCvxxafN8O6RHUsMag93+yM7sJw==
   dependencies:
     axios "^0.26.1"
     collect.js "^4.32.0"
     eth-ens-namehash "^2.0.8"
     ethers "^5.6.2"
+    glob "^7.2.0"
     require-context "^1.1.0"
     traverse "^0.6.6"
 
@@ -2506,7 +2507,7 @@ glob@7.1.7:
     once "^1.3.0"
     path-is-absolute "^1.0.0"
 
-glob@^7.1.3, glob@^7.1.6:
+glob@^7.1.3, glob@^7.1.6, glob@^7.2.0:
   version "7.2.0"
   resolved "https://registry.yarnpkg.com/glob/-/glob-7.2.0.tgz#d15535af7732e02e948f4c41628bd910293f6023"
   integrity sha512-lmLf6gtyrPq8tTjSmrO94wBeQbFR3HbLHbuyD69wuyQkImp2hWqMGB47OX65FBkPffO641IP9jWa1z4ivqG26Q==
