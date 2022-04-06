@@ -2282,10 +2282,10 @@ ethers@^5.6.2:
     "@ethersproject/web" "5.6.0"
     "@ethersproject/wordlists" "5.6.0"
 
-evm-translator@^0.2.2:
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/evm-translator/-/evm-translator-0.2.2.tgz#fb814ae7125d6be7f6862cf517f35561e527bedd"
-  integrity sha512-EDLiOkcUe172POMv3pCOKk/S6yBSi5duq1mqdDjzwaq7N5F6GV428HvgZLxHCvxxafN8O6RHUsMag93+yM7sJw==
+evm-translator@^0.2.3:
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/evm-translator/-/evm-translator-0.2.3.tgz#8c415b250c9684d5cc06cf92519e9af504083d1f"
+  integrity sha512-TCbE7Agf63pW7aXSdoxh8B5m8DkP4UEBaRiv6MuINCHMF3sy3JIsMM59g7Y4sAFeIR2oyX/6ZXReMDD29e2kkw==
   dependencies:
     axios "^0.26.1"
     collect.js "^4.32.0"
