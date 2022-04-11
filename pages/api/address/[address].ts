@@ -32,7 +32,7 @@ const handler = async (_req: NextApiRequest, res: NextApiResponse) => {
         const decodedArr = txArr.map((tx) => tx.decodedData)
         const interpretedArr = txArr.map((tx) => tx.interpretedData)
 
-        res.status(200).json({ decodedArr, interpretedArr })
+        res.status(200).json({ txArr })
     } catch (err: any) {
         console.error(err)
         res.status(500).json({ statusCode: 500, message: err.message })

@@ -13,6 +13,7 @@ import {
     Text,
     VStack,
 } from '@chakra-ui/react'
+import { ActivityData } from 'evm-translator/lib/interfaces'
 import dynamic from 'next/dynamic'
 import { useState } from 'react'
 
@@ -23,7 +24,7 @@ const IndexPage = () => {
     const [txHash, setTxHash] = useState('0xb78ce1e0f55e78cf005b4b5af9978b3d20292dc8c88c94f7ecade67083e2b97f')
     // const [userAddress, setUserAddress] = useState('0x17A059B6B0C8af433032d554B0392995155452E6')
     const [userAddress, setUserAddress] = useState('')
-    const [txData, setTxData] = useState<any>({})
+    const [txData, setTxData] = useState<any>([])
     const [interpreted, setInterpreted] = useState<any>({})
     const [decoded, setDecoded] = useState<any>({})
     const [isLoading, setIsLoading] = useState(false)
@@ -66,7 +67,7 @@ const IndexPage = () => {
                 res.json(),
             )
 
-            setTxData(data.tx)
+            setTxData([data.tx])
             setDecoded({})
             setInterpreted({})
             setIsLoading(false)
@@ -78,14 +79,8 @@ const IndexPage = () => {
                 res.json(),
             )
 
-            const decoded = data.decodedArr
-            const interpreted = data.interpretedArr
+            setTxData(data.txArr)
 
-            setDecoded(decoded)
-            setInterpreted(interpreted)
-            setTxData({})
-
-            console.log(data)
             // setTxData(data.txArr)
             setIsLoading(false)
         }
@@ -99,6 +94,39 @@ const IndexPage = () => {
         etherscanLink = `https://www.etherscan.io/address/${userAddress}`
     } else {
         etherscanLink = ''
+    }
+
+    const SingleTxComponent = (tx: ActivityData) => {
+        return (
+            <>
+                <Text>{tx.interpretedData.exampleDescription || 'No example description yet'}</Text>
+                <Text mx="auto" mb="2">
+                    <Link isExternal href={`https://www.etherscan.io/tx/${tx.rawTxData.txReceipt.transactionHash}`}>
+                        etherscan link <ExternalLinkIcon mx="2px" />
+                    </Link>
+                </Text>
+                <ReactJson
+                    src={tx.interpretedData}
+                    name={false}
+                    theme={'paraiso'}
+                    iconStyle={'triangle'}
+                    displayDataTypes={false}
+                    enableClipboard={false}
+                    displayObjectSize={false}
+                    collapsed={true}
+                />
+                <ReactJson
+                    src={tx.decodedData}
+                    name={false}
+                    theme={'paraiso'}
+                    iconStyle={'triangle'}
+                    displayDataTypes={false}
+                    enableClipboard={false}
+                    displayObjectSize={false}
+                    collapsed={true}
+                />
+            </>
+        )
     }
 
     return (
@@ -167,15 +195,7 @@ const IndexPage = () => {
                         ) : null}
                     </SimpleGrid>
                 </form>
-                <ReactJson
-                    src={dataToShow}
-                    name={false}
-                    theme={'paraiso'}
-                    iconStyle={'triangle'}
-                    displayDataTypes={false}
-                    enableClipboard={false}
-                    displayObjectSize={false}
-                />
+                {txData.map((tx) => SingleTxComponent(tx))}
             </Box>
         </Box>
     )
