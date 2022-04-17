@@ -10,24 +10,25 @@ import {
     POCKET_NETWORK_API_KEY,
     POCKET_NETWORK_ID,
 } from 'utils/constants'
-import TinTin from 'utils/TinTin'
 
-async function getContractNames(rows: ZenLedgerRow[], contractNamesDB: TinTin): Promise<ZenLedgerRow[]> {
-    if (rows.length < 1) return rows
+// import TinTin from 'utils/TinTin'
 
-    await Promise.all(
-        rows.map(async (row, index) => {
-            let officialContractName = row.contract
+// async function getContractNames(rows: ZenLedgerRow[], contractNamesDB: TinTin): Promise<ZenLedgerRow[]> {
+//     if (rows.length < 1) return rows
 
-            if (!officialContractName || officialContractName === 'UNKNOWN') {
-                officialContractName = await contractNamesDB.getNameForContractAddress(row.toAddress)
-                console.log('officialContractName:', officialContractName)
-                row.contract = officialContractName || ''
-            }
-        }),
-    )
-    return rows
-}
+//     await Promise.all(
+//         rows.map(async (row, index) => {
+//             let officialContractName = row.contract
+
+//             if (!officialContractName || officialContractName === 'UNKNOWN') {
+//                 officialContractName = await contractNamesDB.getNameForContractAddress(row.toAddress)
+//                 console.log('officialContractName:', officialContractName)
+//                 row.contract = officialContractName || ''
+//             }
+//         }),
+//     )
+//     return rows
+// }
 
 function replaceUsdcWithUSD(rows: ZenLedgerRow[]) {
     rows.forEach((row) => {
@@ -70,15 +71,15 @@ const handler = async (_req: NextApiRequest, res: NextApiResponse) => {
 
         const rows = await translator.translateWithTaxData(address, userInitiated, notUserInitiated, limit)
 
-        const contractNameDB = new TinTin()
+        // const contractNameDB = new TinTin()
 
-        const rowsWithContractNames = await getContractNames(rows, contractNameDB)
+        // const rowsWithContractNames = await getContractNames(rows, contractNameDB)
 
-        replaceUsdcWithUSD(rowsWithContractNames)
+        replaceUsdcWithUSD(rows)
 
-        console.log('rowsWithContractNames', rowsWithContractNames[0])
+        // console.log('rowsWithContractNames', rowsWithContractNames[0])
 
-        res.status(200).json({ data: rowsWithContractNames })
+        res.status(200).json({ data: rows })
     } catch (err: any) {
         console.error(err)
         res.status(500).json({ statusCode: 500, message: err.message })
