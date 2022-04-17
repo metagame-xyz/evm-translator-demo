@@ -2299,16 +2299,16 @@ ethers@^5.6.2:
     "@ethersproject/web" "5.6.0"
     "@ethersproject/wordlists" "5.6.0"
 
-evm-translator@^0.2.5:
-  version "0.2.5"
-  resolved "https://registry.yarnpkg.com/evm-translator/-/evm-translator-0.2.5.tgz#9590ad1011230bfac451b6cb1463fb2908ef7588"
-  integrity sha512-TqoHZzB437RfhEMYroLcNW/tMRPs61/7w+j88yZ29AdA/Vs3mceTEIanY8NIeOyrRbJkCJ9Bwz+I6UGhcnyH9w==
+evm-translator@^0.2.7:
+  version "0.2.7"
+  resolved "https://registry.yarnpkg.com/evm-translator/-/evm-translator-0.2.7.tgz#eb7e4673548e84409b9c592de9127f99b991099c"
+  integrity sha512-J+C/UUB9KFEWENYOvua5Lybak7Y4gwREIZy3khXzFv956vYHHaxQPuEzxJWKZPYG5szp3DRuCfqkSvwaGWB9Mw==
   dependencies:
     axios "^0.26.1"
     collect.js "^4.32.0"
     eth-ens-namehash "^2.0.8"
     ethers "^5.6.2"
-    glob "^7.2.0"
+    limiter "^2.1.0"
     require-context "^1.1.0"
     traverse "^0.6.6"
 
@@ -2524,7 +2524,7 @@ glob@7.1.7:
     once "^1.3.0"
     path-is-absolute "^1.0.0"
 
-glob@^7.1.3, glob@^7.1.6, glob@^7.2.0:
+glob@^7.1.3, glob@^7.1.6:
   version "7.2.0"
   resolved "https://registry.yarnpkg.com/glob/-/glob-7.2.0.tgz#d15535af7732e02e948f4c41628bd910293f6023"
   integrity sha512-lmLf6gtyrPq8tTjSmrO94wBeQbFR3HbLHbuyD69wuyQkImp2hWqMGB47OX65FBkPffO641IP9jWa1z4ivqG26Q==
@@ -2851,6 +2851,11 @@ json5@^2.1.2:
     array-includes "^3.1.3"
     object.assign "^4.1.2"
 
+just-performance@4.3.0:
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/just-performance/-/just-performance-4.3.0.tgz#cc2bc8c9227f09e97b6b1df4cd0de2df7ae16db1"
+  integrity sha512-L7RjvtJsL0QO8xFs5wEoDDzzJwoiowRw6Rn/GnvldlchS2JQr9wFYPiwZcDfrbbujEKqKN0tvENdbjXdYhDp5Q==
+
 language-subtag-registry@~0.3.2:
   version "0.3.21"
   resolved "https://registry.yarnpkg.com/language-subtag-registry/-/language-subtag-registry-0.3.21.tgz#04ac218bea46f04cb039084602c6da9e788dd45a"
@@ -2870,6 +2875,13 @@ levn@^0.4.1:
   dependencies:
     prelude-ls "^1.2.1"
     type-check "~0.4.0"
+
+limiter@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/limiter/-/limiter-2.1.0.tgz#d38d7c5b63729bb84fb0c4d8594b7e955a5182a2"
+  integrity sha512-361TYz6iay6n+9KvUUImqdLuFigK+K79qrUtBsXhJTLdH4rIt/r1y8r1iozwh8KbZNpujbFTSh74mJ7bwbAMOw==
+  dependencies:
+    just-performance "4.3.0"
 
 lines-and-columns@^1.1.6:
   version "1.2.4"
