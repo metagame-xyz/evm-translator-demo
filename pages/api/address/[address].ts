@@ -13,6 +13,8 @@ import {
 const handler = async (_req: NextApiRequest, res: NextApiResponse) => {
     try {
         const address = _req.query.address as Address
+        const networkId = parseInt(_req.query.networkId as string) || 1
+        const chain = Object.values(chains).find((chain) => chain.id === networkId)
 
         const etherskeys = createEthersAPIKeyObj(
             ALCHEMY_PROJECT_ID,
@@ -23,14 +25,12 @@ const handler = async (_req: NextApiRequest, res: NextApiResponse) => {
         )
 
         const translator = new Translator({
-            chain: chains.ethereum,
+            chain,
             covalentApiKey: COVALENT_API_KEY,
             ethersApiKeys: etherskeys,
         })
 
-        const txArr = await translator.translateFromAddress(address, true, 100)
-        const decodedArr = txArr.map((tx) => tx.decodedData)
-        const interpretedArr = txArr.map((tx) => tx.interpretedData)
+        const txArr = await translator.translateFromAddress(address, true, false, 100)
 
         res.status(200).json({ txArr })
     } catch (err: any) {

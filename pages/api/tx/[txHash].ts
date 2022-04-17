@@ -14,6 +14,9 @@ const handler = async (_req: NextApiRequest, res: NextApiResponse) => {
     try {
         const txHash = _req.query.txHash as string
         const userAddress = _req.query.userAddress as Address
+        const networkId = parseInt(_req.query.networkId as string) || 1
+
+        const chain = Object.values(chains).find((chain) => chain.id === networkId)
 
         const etherskeys = createEthersAPIKeyObj(
             ALCHEMY_PROJECT_ID,
@@ -24,7 +27,7 @@ const handler = async (_req: NextApiRequest, res: NextApiResponse) => {
         )
 
         const translator = new Translator({
-            chain: chains.ethereum,
+            chain,
             covalentApiKey: COVALENT_API_KEY,
             ethersApiKeys: etherskeys,
         })

@@ -1,0 +1,18 @@
+datasource db {
+    provider = "mysql"
+    url      = env("DATABASE_URL")
+    referentialIntegrity = "prisma"
+}
+generator client {
+    provider        = "prisma-client-js"
+    previewFeatures = ["dataProxy","referentialIntegrity"]
+}
+
+model Contract {
+    id      Int    @id @default(autoincrement())
+    address String @db.VarChar(42)
+    chainId Int    @db.Int()
+    name    String @db.VarChar(255)
+
+    @@unique([address, chainId], name: "fqAddr")
+}

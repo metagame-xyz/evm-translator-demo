@@ -3,6 +3,7 @@ import {
     Box,
     Button,
     Center,
+    Checkbox,
     Flex,
     FormControl,
     Heading,
@@ -10,85 +11,109 @@ import {
     Link,
     SimpleGrid,
     Stack,
+    Table,
+    TableCaption,
+    TableContainer,
+    Tbody,
+    Td,
     Text,
+    Tfoot,
+    Th,
+    Thead,
+    Tr,
     VStack,
 } from '@chakra-ui/react'
-import { ActivityData } from 'evm-translator/lib/interfaces'
+import { ActivityData, ZenLedgerRow } from 'evm-translator/lib/interfaces'
 import dynamic from 'next/dynamic'
 import { useState } from 'react'
+import { CSVDownload, CSVLink } from 'react-csv'
 
 const ReactJson = dynamic(() => import('react-json-view'), { ssr: false })
 
 const IndexPage = () => {
     // const [txHash, setTxHash] = useState('0x11dcc41c833868064028af07fae001acdd4a46f10555be7bde959e57fd5c8e3b')
-    const [txHash, setTxHash] = useState('0xb78ce1e0f55e78cf005b4b5af9978b3d20292dc8c88c94f7ecade67083e2b97f')
     // const [userAddress, setUserAddress] = useState('0x17A059B6B0C8af433032d554B0392995155452E6')
-    const [userAddress, setUserAddress] = useState('')
-    const [txData, setTxData] = useState<any>([])
-    const [interpreted, setInterpreted] = useState<any>({})
-    const [decoded, setDecoded] = useState<any>({})
-    const [isLoading, setIsLoading] = useState(false)
+    const [userAddress, setUserAddress] = useState('0x17a059b6b0c8af433032d554b0392995155452e6')
+    const [walletName, setWalletName] = useState('payment-wallet')
+    const [rows, setRows] = useState<any>([])
+    const [userInitiated, setUserInitiated] = useState(true)
+    const [notUserInitiated, setNotUserInitiated] = useState(true)
+    const [txLimit, setTxLimit] = useState(500)
     const [networkId, setNetworkId] = useState(137)
 
-    const validTxhash = new RegExp(/^0x[a-fA-F0-9]{64}$/)
+    const [isLoading, setIsLoading] = useState(false)
+
     const validAddress = new RegExp(/^0x[a-fA-F0-9]{40}$/)
 
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        if (validTxhash.test(txHash)) {
-            let apiUrl = `/api/tx/${txHash}?`
-            if (validAddress.test(userAddress)) {
-                apiUrl += userAddress ? `?userAddress=${userAddress}&` : ''
-            }
-
+        if (validAddress.test(userAddress)) {
+            const initiatedString = userInitiated ? 'userInitiated=true&' : ''
+            const notInitiatedString = userInitiated ? 'notUserInitiated=true&' : ''
+            const limitString = `limit=${txLimit}&`
             const networkString = `networkId=${networkId}&`
-
-            apiUrl += networkString
-
-            setIsLoading(true)
-            const data = await fetch(apiUrl, { headers: { 'Content-Type': 'application/json' } }).then((res) =>
-                res.json(),
-            )
-
-            setTxData([data.tx])
-            setDecoded({})
-            setInterpreted({})
-            setIsLoading(false)
-        } else if (validAddress.test(userAddress)) {
-            let apiUrl = `/api/address/${userAddress}`
+            let apiUrl =
+                `/api/taxes/${userAddress}?` + initiatedString + notInitiatedString + limitString + networkString
 
             setIsLoading(true)
-            const data = await fetch(apiUrl, { headers: { 'Content-Type': 'application/json' } }).then((res) =>
-                res.json(),
-            )
 
-            setTxData(data.txArr)
+            try {
+                const data = await fetch(apiUrl, { headers: { 'Content-Type': 'application/json' } }).then((res) =>
+                    res.json(),
+                )
 
-            // setTxData(data.txArr)
-            setIsLoading(false)
+                console.log('We Need this to be data', data)
+                const rows = data.data
+
+                rows.reverse()
+
+                rows.map((row) => {
+                    // row.reviewed = null
+                    // row.ignore = null
+                    row.walletAddress = userAddress
+                    row.walletName = walletName
+                    // row.network = networkId == 137 ? 'MATIC' : 'ETH'
+                })
+
+                setRows(rows)
+                setIsLoading(false)
+            } catch (error) {
+                console.log(error)
+                debugger
+                setIsLoading(false)
+            }
         }
     }
-
-    const dataToShow = Object.keys(txData).length > 0 ? txData : { decoded, interpreted }
     let etherscanLink = ''
-    if (txHash) {
-        etherscanLink = `https://www.etherscan.io/tx/${txHash}`
-    } else if (userAddress) {
+    let polyscanLink = ''
+
+    if (userAddress) {
         etherscanLink = `https://www.etherscan.io/address/${userAddress}`
-    } else {
-        etherscanLink = ''
+        polyscanLink = `https://polygonscan.com/address/${userAddress}`
     }
+
+    const link = networkId == 137 ? polyscanLink : etherscanLink
 
     const SingleTxComponent = (tx: ActivityData) => {
         return (
             <>
-                <Text>{tx.interpretedData.exampleDescription || 'No example description yet'}</Text>
+                {/* <Text>{tx.interpretedData.exampleDescription || 'No example description yet'}</Text> */}
                 <Text mx="auto" mb="2">
                     <Link isExternal href={`https://www.etherscan.io/tx/${tx.rawTxData.txReceipt.transactionHash}`}>
                         etherscan link <ExternalLinkIcon mx="2px" />
                     </Link>
                 </Text>
+                <ReactJson
+                    src={tx.taxData}
+                    name={false}
+                    theme={'paraiso'}
+                    iconStyle={'triangle'}
+                    displayDataTypes={false}
+                    enableClipboard={false}
+                    displayObjectSize={false}
+                    // collapsed={true}
+                />
                 <ReactJson
                     src={tx.interpretedData}
                     name={false}
@@ -97,7 +122,7 @@ const IndexPage = () => {
                     displayDataTypes={false}
                     enableClipboard={false}
                     displayObjectSize={false}
-                    // collapsed={true}
+                    collapsed={true}
                 />
                 <ReactJson
                     src={tx.decodedData}
@@ -107,19 +132,36 @@ const IndexPage = () => {
                     displayDataTypes={false}
                     enableClipboard={false}
                     displayObjectSize={false}
-                    // collapsed={true}
-                />
-                <ReactJson
-                    src={tx.rawTxData}
-                    name={false}
-                    theme={'paraiso'}
-                    iconStyle={'triangle'}
-                    displayDataTypes={false}
-                    enableClipboard={false}
-                    displayObjectSize={false}
-                    // collapsed={true}
+                    collapsed={true}
                 />
             </>
+        )
+    }
+
+    const TableComponent = (data: any[]) => {
+        console.log('data', data)
+        return (
+            <TableContainer>
+                <Table variant="simple" size="sm">
+                    <TableCaption>Imperial to metric conversion factors</TableCaption>
+                    <Thead>
+                        <Tr>
+                            {Object.keys(data[0]).map((key) => (
+                                <Th key={key}>{key}</Th>
+                            ))}
+                        </Tr>
+                    </Thead>
+                    <Tbody>
+                        {data.map((item) => (
+                            <Tr key={item.txHash}>
+                                {Object.entries(item).map(([key, val]) => (
+                                    <Td key={key}>{val}</Td>
+                                ))}
+                            </Tr>
+                        ))}
+                    </Tbody>
+                </Table>
+            </TableContainer>
         )
     }
 
@@ -139,16 +181,6 @@ const IndexPage = () => {
                 <form>
                     <SimpleGrid columns={[1, 1, 1, 1]} spacing="2" alignItems="center">
                         <Input
-                            placeholder="tx Hash"
-                            borderColor="brand.400"
-                            type="text"
-                            maxW="80%"
-                            mx="auto"
-                            my="2"
-                            value={txHash}
-                            onChange={(e) => setTxHash(e.currentTarget.value)}
-                        />
-                        <Input
                             placeholder="user Address (optional)"
                             type="text"
                             my="2"
@@ -158,6 +190,12 @@ const IndexPage = () => {
                             value={userAddress}
                             onChange={(e) => setUserAddress(e.currentTarget.value)}
                         />
+                        <Checkbox isChecked={userInitiated} onChange={(e) => setUserInitiated(e.target.checked)}>
+                            User Initiated
+                        </Checkbox>
+                        <Checkbox isChecked={notUserInitiated} onChange={(e) => setNotUserInitiated(e.target.checked)}>
+                            Not User Initiated
+                        </Checkbox>
                         <Button
                             isLoading={isLoading}
                             isDisabled={isLoading}
@@ -180,16 +218,22 @@ const IndexPage = () => {
                         >
                             Get Interpretation
                         </Button>
-                        {etherscanLink ? (
+                        {link ? (
                             <Text mx="auto" mb="2">
-                                <Link isExternal href={etherscanLink}>
+                                <Link isExternal href={link}>
                                     etherscan link <ExternalLinkIcon mx="2px" />
                                 </Link>
                             </Text>
                         ) : null}
                     </SimpleGrid>
                 </form>
-                {txData.map((tx) => SingleTxComponent(tx))}
+                {rows.length > 0 ? (
+                    <CSVLink data={rows} filename={`${walletName}-${networkId == 137 ? 'Polygon' : 'Ethereum'}.csv`}>
+                        Download me
+                    </CSVLink>
+                ) : null}
+                {rows.length > 0 ? TableComponent(rows) : null}
+                {/* {txData.map((tx) => SingleTxComponent(tx))} */}
             </Box>
         </Box>
     )
