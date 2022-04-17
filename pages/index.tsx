@@ -28,7 +28,7 @@ const IndexPage = () => {
     const [interpreted, setInterpreted] = useState<any>({})
     const [decoded, setDecoded] = useState<any>({})
     const [isLoading, setIsLoading] = useState(false)
-    const [networkId, setNetworkId] = useState(137)
+    const [networkId, setNetworkId] = useState(1)
 
     const validTxhash = new RegExp(/^0x[a-fA-F0-9]{64}$/)
     const validAddress = new RegExp(/^0x[a-fA-F0-9]{40}$/)
