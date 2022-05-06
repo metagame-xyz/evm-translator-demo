@@ -39,7 +39,7 @@ const IndexPage = () => {
     const [userInitiated, setUserInitiated] = useState(true)
     const [notUserInitiated, setNotUserInitiated] = useState(true)
     const [txLimit, setTxLimit] = useState(500)
-    const [networkId, setNetworkId] = useState(137)
+    const [networkId, setNetworkId] = useState(1)
 
     const [isLoading, setIsLoading] = useState(false)
 

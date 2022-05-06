@@ -16,14 +16,16 @@ import {
 import { ActivityData } from 'evm-translator/lib/interfaces'
 import dynamic from 'next/dynamic'
 import { useState } from 'react'
+import { CSVLink } from 'react-csv'
 
 const ReactJson = dynamic(() => import('react-json-view'), { ssr: false })
 
 const IndexPage = () => {
     // const [txHash, setTxHash] = useState('0x11dcc41c833868064028af07fae001acdd4a46f10555be7bde959e57fd5c8e3b')
-    const [txHash, setTxHash] = useState('0xb78ce1e0f55e78cf005b4b5af9978b3d20292dc8c88c94f7ecade67083e2b97f')
-    // const [userAddress, setUserAddress] = useState('0x17A059B6B0C8af433032d554B0392995155452E6')
-    const [userAddress, setUserAddress] = useState('')
+    const [txHash, setTxHash] = useState('0x5a9f106874fd5c72a046e9e966c5ddc3527777eb22b736ed559c8817637911e3')
+    // const [txHash, setTxHash] = useState('')
+    const [userAddress, setUserAddress] = useState('0x17A059B6B0C8af433032d554B0392995155452E6')
+    // const [userAddress, setUserAddress] = useState('')
     const [txData, setTxData] = useState<any>([])
     const [interpreted, setInterpreted] = useState<any>({})
     const [decoded, setDecoded] = useState<any>({})
@@ -39,7 +41,7 @@ const IndexPage = () => {
         if (validTxhash.test(txHash)) {
             let apiUrl = `/api/tx/${txHash}?`
             if (validAddress.test(userAddress)) {
-                apiUrl += userAddress ? `?userAddress=${userAddress}&` : ''
+                apiUrl += userAddress ? `userAddress=${userAddress}&` : ''
             }
 
             const networkString = `networkId=${networkId}&`
@@ -97,7 +99,7 @@ const IndexPage = () => {
                     displayDataTypes={false}
                     enableClipboard={false}
                     displayObjectSize={false}
-                    // collapsed={true}
+                    collapsed={!txHash}
                 />
                 <ReactJson
                     src={tx.decodedData}
@@ -107,7 +109,7 @@ const IndexPage = () => {
                     displayDataTypes={false}
                     enableClipboard={false}
                     displayObjectSize={false}
-                    // collapsed={true}
+                    collapsed={!txHash}
                 />
                 <ReactJson
                     src={tx.rawTxData}
@@ -117,7 +119,7 @@ const IndexPage = () => {
                     displayDataTypes={false}
                     enableClipboard={false}
                     displayObjectSize={false}
-                    // collapsed={true}
+                    collapsed={!txHash}
                 />
             </>
         )
@@ -156,7 +158,7 @@ const IndexPage = () => {
                             mx="auto"
                             borderColor="brand.400"
                             value={userAddress}
-                            onChange={(e) => setUserAddress(e.currentTarget.value)}
+                            onChange={(e) => setUserAddress(e.currentTarget.value.toLowerCase())}
                         />
                         <Button
                             isLoading={isLoading}
@@ -189,6 +191,14 @@ const IndexPage = () => {
                         ) : null}
                     </SimpleGrid>
                 </form>
+                {txData.length > 0 ? (
+                    <CSVLink
+                        data={txData.map((tx) => tx.interpretedData)}
+                        filename={`txs-${networkId == 137 ? 'Polygon' : 'Ethereum'}.csv`}
+                    >
+                        Download me
+                    </CSVLink>
+                ) : null}
                 {txData.map((tx) => SingleTxComponent(tx))}
             </Box>
         </Box>
