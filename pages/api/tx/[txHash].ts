@@ -1,4 +1,4 @@
-import Translator, { Address, chains, createEthersAPIKeyObj } from 'evm-translator'
+import Translator, { chains, createEthersAPIKeyObj } from 'evm-translator'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 import {
@@ -13,7 +13,7 @@ import {
 const handler = async (_req: NextApiRequest, res: NextApiResponse) => {
     try {
         const txHash = _req.query.txHash as string
-        const userAddress = _req.query.userAddress as Address
+        const userAddress = _req.query.userAddress as string
         const networkId = parseInt(_req.query.networkId as string) || 1
 
         const chain = Object.values(chains).find((chain) => chain.id === networkId)

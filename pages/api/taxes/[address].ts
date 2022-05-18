@@ -1,4 +1,4 @@
-import Translator, { Address, chains, createEthersAPIKeyObj } from 'evm-translator'
+import Translator, { chains, createEthersAPIKeyObj } from 'evm-translator'
 import { ActivityData } from 'evm-translator/lib/interfaces'
 import { ZenLedgerRow } from 'evm-translator/lib/interfaces/zenLedger'
 import { NextApiRequest, NextApiResponse } from 'next'
@@ -50,7 +50,7 @@ function replaceUsdcWithUSD(rows: ZenLedgerRow[]) {
 
 const handler = async (_req: NextApiRequest, res: NextApiResponse) => {
     try {
-        const address = _req.query.address as Address
+        const address = _req.query.address as string
         const userInitiated = _req.query.userInitiated === 'true'
         const notUserInitiated = _req.query.notUserInitiated === 'true'
         const limit = parseInt(_req.query.limit as string) || 100

@@ -1,4 +1,4 @@
-export const s3UrlToParts = (s3Url: string): {} => {
+export const s3UrlToParts = (s3Url: string): { Bucket: string; Key: string } => {
     const s3UrlRe = /^[sS]3:\/\/(.*?)\/(.*)/
 
     if (!s3Url) {

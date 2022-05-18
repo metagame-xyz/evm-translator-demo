@@ -23,7 +23,7 @@ import {
     Tr,
     VStack,
 } from '@chakra-ui/react'
-import { ActivityData, ZenLedgerRow } from 'evm-translator/lib/interfaces'
+import { ActivityData } from 'evm-translator/lib/interfaces'
 import dynamic from 'next/dynamic'
 import { useState } from 'react'
 import { CSVDownload, CSVLink } from 'react-csv'
@@ -53,7 +53,7 @@ const IndexPage = () => {
             const notInitiatedString = userInitiated ? 'notUserInitiated=true&' : ''
             const limitString = `limit=${txLimit}&`
             const networkString = `networkId=${networkId}&`
-            let apiUrl =
+            const apiUrl =
                 `/api/taxes/${userAddress}?` + initiatedString + notInitiatedString + limitString + networkString
 
             setIsLoading(true)
@@ -104,7 +104,7 @@ const IndexPage = () => {
                         etherscan link <ExternalLinkIcon mx="2px" />
                     </Link>
                 </Text>
-                <ReactJson
+                {/* <ReactJson
                     src={tx.taxData}
                     name={false}
                     theme={'paraiso'}
@@ -113,7 +113,7 @@ const IndexPage = () => {
                     enableClipboard={false}
                     displayObjectSize={false}
                     // collapsed={true}
-                />
+                /> */}
                 <ReactJson
                     src={tx.interpretedData}
                     name={false}

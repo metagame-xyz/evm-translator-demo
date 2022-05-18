@@ -65,7 +65,7 @@ const IndexPage = () => {
         e.preventDefault()
 
         if (validAddress.test(contractAddress)) {
-            let apiUrl = `/api/generator/${contractAddress}`
+            const apiUrl = `/api/generator/${contractAddress}`
 
             setIsLoading(true)
             const data = (await fetch(apiUrl, { headers: { 'Content-Type': 'application/json' } }).then((res) =>

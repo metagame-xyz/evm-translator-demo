@@ -58,7 +58,7 @@ const IndexPage = () => {
             setInterpreted({})
             setIsLoading(false)
         } else if (validAddress.test(userAddress)) {
-            let apiUrl = `/api/address/${userAddress}`
+            const apiUrl = `/api/address/${userAddress}`
 
             setIsLoading(true)
             const data = await fetch(apiUrl, { headers: { 'Content-Type': 'application/json' } }).then((res) =>

@@ -4,7 +4,7 @@ class TinTin {
     client: PrismaClient
     chainId: number
 
-    constructor(chainId: number = 1) {
+    constructor(chainId = 1) {
         this.chainId = chainId
         this.client = new PrismaClient()
     }
