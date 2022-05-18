@@ -1,5 +1,6 @@
 import Translator, { Address, chains, createEthersAPIKeyObj } from 'evm-translator'
-import { ActivityData, ZenLedgerRow } from 'evm-translator/lib/interfaces'
+import { ActivityData } from 'evm-translator/lib/interfaces'
+import { ZenLedgerRow } from 'evm-translator/lib/interfaces/zenLedger'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 import {
