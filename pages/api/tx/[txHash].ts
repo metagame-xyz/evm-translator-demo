@@ -1,14 +1,7 @@
-import Translator, { chains, createEthersAPIKeyObj } from 'evm-translator'
+import { chains, Translator2 } from 'evm-translator'
 import { NextApiRequest, NextApiResponse } from 'next'
 
-import {
-    ALCHEMY_PROJECT_ID,
-    COVALENT_API_KEY,
-    ETHERSCAN_API_KEY,
-    INFURA_PROJECT_ID,
-    POCKET_NETWORK_API_KEY,
-    POCKET_NETWORK_ID,
-} from 'utils/constants'
+import { ALCHEMY_PROJECT_ID, ETHERSCAN_API_KEY, MONGOOSE_CONNECTION_STRING } from 'utils/constants'
 
 const handler = async (_req: NextApiRequest, res: NextApiResponse) => {
     try {
@@ -18,21 +11,17 @@ const handler = async (_req: NextApiRequest, res: NextApiResponse) => {
 
         const chain = Object.values(chains).find((chain) => chain.id === networkId)
 
-        const etherskeys = createEthersAPIKeyObj(
-            ALCHEMY_PROJECT_ID,
-            ETHERSCAN_API_KEY,
-            INFURA_PROJECT_ID,
-            POCKET_NETWORK_ID,
-            POCKET_NETWORK_API_KEY,
-        )
-
-        const translator = new Translator({
+        const translator = new Translator2({
             chain,
-            covalentApiKey: COVALENT_API_KEY,
-            ethersApiKeys: etherskeys,
+            userAddress,
+            alchemyProjectId: ALCHEMY_PROJECT_ID,
+            etherscanAPIKey: ETHERSCAN_API_KEY,
+            connectionString: MONGOOSE_CONNECTION_STRING,
         })
 
-        const tx = await translator.translateFromHash(txHash, userAddress)
+        await translator.initializeMongoose()
+
+        const tx = await translator.allDataFromTxHash(txHash, userAddress)
 
         console.log(tx)
 

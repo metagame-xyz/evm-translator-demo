@@ -1,8 +1,9 @@
-import Translator, { chains, Translator2 } from 'evm-translator'
+import { chains, Translator2 } from 'evm-translator'
 import { filterABIs } from 'evm-translator/lib/utils'
+import { MongooseDatabaseInterface } from 'evm-translator/lib/utils/mongoose'
 import { NextApiRequest, NextApiResponse } from 'next'
 
-import { ALCHEMY_PROJECT_ID, ETHERSCAN_API_KEY } from 'utils/constants'
+import { ALCHEMY_PROJECT_ID, ETHERSCAN_API_KEY, MONGOOSE_CONNECTION_STRING } from 'utils/constants'
 
 const handler = async (_req: NextApiRequest, res: NextApiResponse) => {
     try {
@@ -17,7 +18,10 @@ const handler = async (_req: NextApiRequest, res: NextApiResponse) => {
             userAddress,
             alchemyProjectId: ALCHEMY_PROJECT_ID,
             etherscanAPIKey: ETHERSCAN_API_KEY,
+            connectionString: MONGOOSE_CONNECTION_STRING,
         })
+
+        await translator.initializeMongoose()
 
         /*
         input: s3 link
@@ -78,6 +82,7 @@ const handler = async (_req: NextApiRequest, res: NextApiResponse) => {
         )
 
         const contractDataMap = await translator.getContractsData(unfilteredABIs, officialContractNamesMap)
+        // TODO before we decode, we need to find which events we dont have an abi for, retrieve the specific ABI_item for it, and add it to the contractData's db row
         const filteredABIs = filterABIs(unfilteredABIs)
         const { decodedLogs, decodedCallData } = await translator.decodeTxData(tx, filteredABIs, contractDataMap)
 
