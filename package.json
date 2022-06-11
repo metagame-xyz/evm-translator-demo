@@ -7,6 +7,7 @@
         "format": "prettier --write \"**/*.ts\" \"**/*.tsx\"",
         "lint": "eslint --ignore-path .eslintignore --ext .ts,.tsx .",
         "type-check": "tsc",
+        "latest": "yarn upgrade evm-translator@latest",
         "check": "yarn run type-check && yarn run lint && yarn run format"
     },
     "dependencies": {
@@ -16,7 +17,7 @@
         "@emotion/styled": "^11",
         "@fontsource/courier-prime": "^4.5.6",
         "@fontsource/lato": "^4.5.5",
-        "evm-translator": "^0.2.14",
+        "evm-translator": "^0.2.16",
         "framer-motion": "^6",
         "next": "^12.1.4",
         "react": "^17.0.2",
