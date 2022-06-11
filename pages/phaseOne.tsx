@@ -146,14 +146,9 @@ const IndexPage = () => {
                         ) : null}
                     </SimpleGrid>
                 </form>
-                {txData.length > 0 ? (
-                    <CSVLink
-                        data={txData.map((tx) => tx)}
-                        filename={`txs-${networkId == 137 ? 'Polygon' : 'Ethereum'}.csv`}
-                    >
-                        Download me
-                    </CSVLink>
-                ) : null}
+                <Box alignSelf="center">
+                    <Center fontSize="4xl">{`Meets Criteria: ${meetsRequirements}`}</Center>
+                </Box>
                 {txData.map((tx) => SingleTxComponent(tx))}
             </Box>
         </Box>

@@ -12,6 +12,10 @@ class Steward {
         // TODO lowercase all addresses
         // TODO parse all key:timestamp keys to Date objects
 
+        data.forEach((tx: Interpretation) => {
+            console.log(tx.timestamp)
+        })
+
         let meetsRequirements = true
 
         const txsForProof = []
@@ -28,15 +32,18 @@ class Steward {
                             if (tx[c.key] !== c.value) meetsCriteria = false
                             break
                         case CriteriaType.GREATER_THAN_OR_EQUAL:
-                            if (tx[c.key] <= c.value) meetsCriteria = false
+                            if (!(tx[c.key] >= c.value)) meetsCriteria = false
+                            break
                         case CriteriaType.LESS_THAN_OR_EQUAL:
-                            if (tx[c.key] >= c.value) meetsCriteria = false
+                            if (!(tx[c.key] <= c.value)) meetsCriteria = false
+                            break
                         case CriteriaType.ONE_OF:
                             if (Array.isArray(c.value)) {
                                 if (!c.value.includes(tx[c.key] as never)) meetsCriteria = false // see note at end of file
                             } else {
                                 if (tx[c.key] !== c.value) meetsCriteria = false
                             }
+                            break
                         default:
                             meetsCriteria = false
                             break
