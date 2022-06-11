@@ -1,16 +1,7 @@
-import Translator, { chains, createEthersAPIKeyObj } from 'evm-translator'
-import { ActivityData } from 'evm-translator/lib/interfaces'
-import { ZenLedgerRow } from 'evm-translator/lib/interfaces/zenLedger'
+import Translator, { ActivityData, chains, ZenLedgerRow } from 'evm-translator'
 import { NextApiRequest, NextApiResponse } from 'next'
 
-import {
-    ALCHEMY_PROJECT_ID,
-    COVALENT_API_KEY,
-    ETHERSCAN_API_KEY,
-    INFURA_PROJECT_ID,
-    POCKET_NETWORK_API_KEY,
-    POCKET_NETWORK_ID,
-} from 'utils/constants'
+import { ALCHEMY_PROJECT_ID, COVALENT_API_KEY, ETHERSCAN_API_KEY } from 'utils/constants'
 
 // import TinTin from 'utils/TinTin'
 
@@ -56,21 +47,15 @@ const handler = async (_req: NextApiRequest, res: NextApiResponse) => {
         const limit = parseInt(_req.query.limit as string) || 100
         const networkId = parseInt(_req.query.networkId as string) || 1
 
-        const etherskeys = createEthersAPIKeyObj(
-            ALCHEMY_PROJECT_ID,
-            ETHERSCAN_API_KEY,
-            INFURA_PROJECT_ID,
-            POCKET_NETWORK_ID,
-            POCKET_NETWORK_API_KEY,
-        )
-
         const translator = new Translator({
             chain: networkId == 137 ? chains.polygon : chains.ethereum,
-            covalentApiKey: COVALENT_API_KEY,
-            ethersApiKeys: etherskeys,
+            alchemyProjectId: ALCHEMY_PROJECT_ID,
+            etherscanAPIKey: ETHERSCAN_API_KEY,
+            covalentAPIKey: COVALENT_API_KEY,
         })
 
-        const rows = await translator.translateWithTaxData(address, userInitiated, notUserInitiated, limit)
+        // const rows = await translator.translateWithTaxData(address, userInitiated, notUserInitiated, limit)
+        const rows = []
 
         // const contractNameDB = new TinTin()
 

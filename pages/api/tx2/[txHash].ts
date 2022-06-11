@@ -1,6 +1,5 @@
-import { chains, Translator2 } from 'evm-translator'
-import { filterABIs } from 'evm-translator/lib/utils'
-import { MongooseDatabaseInterface } from 'evm-translator/lib/utils/mongoose'
+import Translator, { chains } from 'evm-translator'
+import { filterABIMap } from 'evm-translator/lib/utils'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 import { ALCHEMY_PROJECT_ID, ETHERSCAN_API_KEY, MONGOOSE_CONNECTION_STRING } from 'utils/constants'
@@ -13,7 +12,7 @@ const handler = async (_req: NextApiRequest, res: NextApiResponse) => {
 
         const chain = Object.values(chains).find((chain) => chain.id === networkId)
 
-        const translator = new Translator2({
+        const translator = new Translator({
             chain,
             userAddress,
             alchemyProjectId: ALCHEMY_PROJECT_ID,
@@ -74,23 +73,24 @@ const handler = async (_req: NextApiRequest, res: NextApiResponse) => {
 
         */
 
-        const tx = await translator.getRawTxData(txHash)
+        const rawTxData = await translator.getRawTxData(txHash)
 
-        const contractAddresses = translator.getContractAddressesFromRawTxData(tx)
+        const contractAddresses = translator.getContractAddressesFromRawTxData(rawTxData)
         const [unfilteredABIs, officialContractNamesMap] = await translator.getABIsAndNamesForContracts(
             contractAddresses,
         )
 
-        const contractDataMap = await translator.getContractsData(unfilteredABIs, officialContractNamesMap)
+        const contractDataMap = await translator.getContractsData(unfilteredABIs, officialContractNamesMap, {})
         // TODO before we decode, we need to find which events we dont have an abi for, retrieve the specific ABI_item for it, and add it to the contractData's db row
-        const filteredABIs = filterABIs(unfilteredABIs)
-        const { decodedLogs, decodedCallData } = await translator.decodeTxData(tx, filteredABIs, contractDataMap)
+        const filteredABIs = filterABIMap(unfilteredABIs)
+        const { decodedLogs, decodedCallData } = await translator.decodeTxData(rawTxData, filteredABIs, contractDataMap)
 
         const allAddresses = translator.getAllAddresses(decodedLogs, decodedCallData, contractAddresses)
+
         const ensMap = await translator.getENSNames(allAddresses)
 
         // add in trace logs
-        const decoded = translator.augmentDecodedData(decodedLogs, decodedCallData, ensMap, contractDataMap, tx)
+        const decoded = translator.augmentDecodedData(decodedLogs, decodedCallData, ensMap, contractDataMap, rawTxData)
 
         const interpretedArr = []
         allAddresses.forEach((address) => {
@@ -102,7 +102,7 @@ const handler = async (_req: NextApiRequest, res: NextApiResponse) => {
             contractAddresses,
             allAddresses,
             decoded,
-            tx,
+            tx: rawTxData,
         })
     } catch (err: any) {
         console.log('err', err)
