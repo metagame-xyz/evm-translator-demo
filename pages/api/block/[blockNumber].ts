@@ -8,6 +8,7 @@ function getRawDataFromBlockNumber(blockNumber: string): any {
     return block_14769609
 }
 
+
 async function getData(txHash: string, translator: Translator): Promise<any> {
     // timer.startTimer(`getRawTxData ${txHash}`)
     const tx = await translator.getRawTxData(txHash)

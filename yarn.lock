@@ -2484,10 +2484,10 @@ ethers@^5.6.2:
     "@ethersproject/web" "5.6.1"
     "@ethersproject/wordlists" "5.6.1"
 
-evm-translator@^0.2.19:
-  version "0.2.19"
-  resolved "https://registry.yarnpkg.com/evm-translator/-/evm-translator-0.2.19.tgz#4665f8234bf771cd7da2b3a8677ae8e69345e3b8"
-  integrity sha512-tOPrDOHtLGguC25OcbaqCLLpnrulTgdnUFWcIHbbdESAfXLScSFaVKwRzvzkrMNP4zT7Yb+4moo9R6OC8u522g==
+evm-translator@^0.2.20:
+  version "0.2.20"
+  resolved "https://registry.yarnpkg.com/evm-translator/-/evm-translator-0.2.20.tgz#32e6edb2366da91ebcb2745d6b241eec2bdf832a"
+  integrity sha512-qHhNz7Zuanqk8wMV30MFEJvalnCEGWEdrhjqm03GbJz++tcOnInM5qIkXGb3vj+3VksHQVx+8Lu6n57+7tIjuQ==
   dependencies:
     axios "^0.26.1"
     bottleneck "^2.19.5"
