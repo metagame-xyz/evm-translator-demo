@@ -22,7 +22,7 @@ import { phaseOneEarlyMintRequirements } from 'requirements'
 const ReactJson = dynamic(() => import('react-json-view'), { ssr: false })
 
 const IndexPage = () => {
-    const [userAddress, setUserAddress] = useState('0x7d0414B0622f485D0368602E76F502CabEf57bf4')
+    const [userAddress, setUserAddress] = useState('0x1668c9725e27Bf5943bBD43886E1Fb5AFe75c46C')
     // const [userAddress, setUserAddress] = useState('')
     const [txData, setTxData] = useState<Interpretation[]>([])
 

@@ -26,7 +26,7 @@ const IndexPage = () => {
     // const [txHash, setTxHash] = useState('')
     const [userAddress, setUserAddress] = useState('0x17A059B6B0C8af433032d554B0392995155452E6')
     // const [userAddress, setUserAddress] = useState('')
-    const [txData, setTxData] = useState<any>([])
+    const [txData, setTxData] = useState<ActivityData[]>([])
     const [interpreted, setInterpreted] = useState<any>({})
     const [decoded, setDecoded] = useState<any>({})
     const [isLoading, setIsLoading] = useState(false)
@@ -49,9 +49,11 @@ const IndexPage = () => {
             apiUrl += networkString
 
             setIsLoading(true)
-            const data = await fetch(apiUrl, { headers: { 'Content-Type': 'application/json' } }).then((res) =>
+            const data = (await fetch(apiUrl, { headers: { 'Content-Type': 'application/json' } }).then((res) =>
                 res.json(),
-            )
+            )) as { tx: ActivityData }
+
+            console.log('data', data)
 
             setTxData([data.tx])
             setDecoded({})
@@ -61,9 +63,9 @@ const IndexPage = () => {
             const apiUrl = `/api/address/${userAddress}`
 
             setIsLoading(true)
-            const data = await fetch(apiUrl, { headers: { 'Content-Type': 'application/json' } }).then((res) =>
+            const data = (await fetch(apiUrl, { headers: { 'Content-Type': 'application/json' } }).then((res) =>
                 res.json(),
-            )
+            )) as { txArr: ActivityData[] }
 
             setTxData(data.txArr)
 

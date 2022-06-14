@@ -30,6 +30,9 @@ const handler = async (_req: NextApiRequest, res: NextApiResponse) => {
 
         const txArr = await translator.allDataFromTxHashArr(txHashArr, address)
 
+        console.log('txArr', txArr[0])
+        console.log('txArr length', txArr.length)
+
         const interpretedTxArr = txArr.map((tx: ActivityData) => tx.interpretedData)
 
         const { meetsRequirements, txsForProof } = steward.check(interpretedTxArr, requirements)
