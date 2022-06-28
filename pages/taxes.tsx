@@ -125,7 +125,7 @@ const IndexPage = () => {
                     collapsed={true}
                 />
                 <ReactJson
-                    src={tx.decodedData}
+                    src={tx.decodedTx}
                     name={false}
                     theme={'paraiso'}
                     iconStyle={'triangle'}
