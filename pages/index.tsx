@@ -2,16 +2,12 @@ import { ExternalLinkIcon } from '@chakra-ui/icons'
 import {
     Box,
     Button,
-    Center,
-    Flex,
-    FormControl,
     Grid,
     Heading,
     Input,
     Link,
     ListItem,
     SimpleGrid,
-    Stack,
     Text,
     UnorderedList,
     VStack,
@@ -19,7 +15,6 @@ import {
 import { ActivityData } from 'evm-translator'
 import dynamic from 'next/dynamic'
 import { useState } from 'react'
-import { CSVLink } from 'react-csv'
 
 const ReactJson = dynamic(() => import('react-json-view'), { ssr: false })
 
@@ -30,8 +25,6 @@ const IndexPage = () => {
     const [userAddress, setUserAddress] = useState('')
     // const [userAddress, setUserAddress] = useState('')
     const [txData, setTxData] = useState<ActivityData[]>([])
-    const [interpreted, setInterpreted] = useState<any>({})
-    const [decoded, setDecoded] = useState<any>({})
     const [isLoading, setIsLoading] = useState(false)
     const [networkId, setNetworkId] = useState(1)
 
@@ -74,13 +67,8 @@ const IndexPage = () => {
         console.log('data', data)
 
         setTxData([data.tx])
-        setDecoded({})
-        setInterpreted({})
         setIsLoading(false)
     }
-
-    const dataToShow = Object.keys(txData).length > 0 ? txData : { decoded, interpreted }
-    const etherscanLink = `https://www.etherscan.io/tx/${txHash}`
 
     const exampleListItem = (entityObj: Record<string, string>, functionName: string) => {
         return (
@@ -196,13 +184,6 @@ const IndexPage = () => {
                                 >
                                     Get Interpretation
                                 </Button>
-                                {etherscanLink ? (
-                                    <Text mx="auto" mb="2">
-                                        <Link isExternal href={etherscanLink}>
-                                            etherscan link <ExternalLinkIcon mx="2px" />
-                                        </Link>
-                                    </Text>
-                                ) : null}
                             </SimpleGrid>
                         </form>
                     </Box>
