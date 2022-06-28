@@ -23,7 +23,7 @@ import {
     Tr,
     VStack,
 } from '@chakra-ui/react'
-import { ActivityData } from 'evm-translator/lib/interfaces'
+import { ActivityData } from 'evm-translator'
 import dynamic from 'next/dynamic'
 import { useState } from 'react'
 import { CSVDownload, CSVLink } from 'react-csv'
