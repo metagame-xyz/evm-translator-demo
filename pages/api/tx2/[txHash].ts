@@ -83,14 +83,14 @@ const handler = async (_req: NextApiRequest, res: NextApiResponse) => {
         const contractDataMap = await translator.getContractsData(unfilteredABIs, officialContractNamesMap, {})
         // TODO before we decode, we need to find which events we dont have an abi for, retrieve the specific ABI_item for it, and add it to the contractData's db row
         const filteredABIs = filterABIMap(unfilteredABIs)
-        const { decodedLogs, decodedCallData } = await translator.decodeTxData(rawTxData, filteredABIs, contractDataMap)
+        const { decodedLogs, decodedCallData, decodedTraceData } = await translator.decodeTxData(rawTxData, filteredABIs, contractDataMap)
 
         const allAddresses = translator.getAllAddresses(decodedLogs, decodedCallData, contractAddresses)
 
         const ensMap = await translator.getENSNames(allAddresses)
 
         // add in trace logs
-        const decoded = translator.augmentDecodedData(decodedLogs, decodedCallData, ensMap, contractDataMap, rawTxData)
+        const decoded = translator.augmentDecodedData(decodedLogs, decodedCallData, decodedTraceData, ensMap, contractDataMap, rawTxData)
 
         const interpretedArr = []
         allAddresses.forEach((address) => {
