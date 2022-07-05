@@ -17,7 +17,7 @@
         "@emotion/styled": "^11",
         "@fontsource/courier-prime": "^4.5.6",
         "@fontsource/lato": "^4.5.5",
-        "evm-translator": "^0.2.29",
+        "evm-translator": "^0.2.30",
         "framer-motion": "^6",
         "next": "^12.1.4",
         "react": "^17.0.2",
