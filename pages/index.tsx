@@ -159,68 +159,71 @@ const IndexPage = () => {
         <Box m="4">
             <Box mx="auto" maxW="1280px">
                 <Grid templateColumns="2fr 1fr">
-                    <Box>
-                        <VStack alignItems="center" justify="center" m="4">
-                            <Heading>Query Options</Heading>
-                            <Box>
-                                <Text mx="auto" mb="2">
-                                    1. Just a tx hash <br />
-                                    2. A tx hash + the user address for context (defaults to the from address) <br />
-                                </Text>
-                            </Box>
-                        </VStack>
-                        <form>
-                            <SimpleGrid columns={[1, 1, 1, 1]} spacing="2" alignItems="center">
-                                <Input
-                                    placeholder="tx Hash"
-                                    borderColor="brand.400"
-                                    type="text"
-                                    maxW="80%"
-                                    mx="auto"
-                                    my="2"
-                                    value={txHash}
-                                    onChange={(e) => setTxHash(e.currentTarget.value)}
-                                    isInvalid={!validTxhash.test(txHash)}
-                                />
-                                <Input
-                                    placeholder="user Address as context (optional)"
-                                    type="text"
-                                    my="2"
-                                    maxW="80%"
-                                    mx="auto"
-                                    borderColor="brand.400"
-                                    value={userAddress}
-                                    onChange={(e) => setUserAddress(e.currentTarget.value.toLowerCase())}
-                                    isInvalid={!validAddress.test(userAddress) && userAddress !== ''}
-                                />
-                                <Button
-                                    isLoading={isLoading}
-                                    isDisabled={
-                                        isLoading ||
-                                        !validTxhash.test(txHash) ||
-                                        (!validAddress.test(userAddress) && userAddress !== '')
-                                    }
-                                    loadingText="loading..."
-                                    fontWeight="normal"
-                                    colorScheme="brand"
-                                    bgColor="brand.600"
-                                    maxW="80%"
-                                    mx="auto"
-                                    mb="4"
-                                    // color="brand.900"
-                                    _hover={{ bg: 'brand.500' }}
-                                    // size="md"
-                                    // height="60px"
-                                    minW="xs"
-                                    // boxShadow="lg"
-                                    fontSize="lg"
-                                    type="submit"
-                                    onClick={handleSubmit}
-                                >
-                                    Get Interpretation
-                                </Button>
-                            </SimpleGrid>
-                        </form>
+                    <Box display='flex' flexDirection="column">
+                        <Box>
+                            <VStack alignItems="center" justify="center" m="4">
+                                <Heading>Query Options</Heading>
+                                <Box>
+                                    <Text mx="auto" mb="2">
+                                        1. Just a tx hash <br />
+                                        2. A tx hash + the user address for context (defaults to the from address) <br />
+                                    </Text>
+                                </Box>
+                            </VStack>
+                            <form>
+                                <SimpleGrid columns={[1, 1, 1, 1]} spacing="2" alignItems="center">
+                                    <Input
+                                        placeholder="tx Hash"
+                                        borderColor="brand.400"
+                                        type="text"
+                                        maxW="80%"
+                                        mx="auto"
+                                        my="2"
+                                        value={txHash}
+                                        onChange={(e) => setTxHash(e.currentTarget.value)}
+                                        isInvalid={!validTxhash.test(txHash)}
+                                    />
+                                    <Input
+                                        placeholder="user Address as context (optional)"
+                                        type="text"
+                                        my="2"
+                                        maxW="80%"
+                                        mx="auto"
+                                        borderColor="brand.400"
+                                        value={userAddress}
+                                        onChange={(e) => setUserAddress(e.currentTarget.value.toLowerCase())}
+                                        isInvalid={!validAddress.test(userAddress) && userAddress !== ''}
+                                    />
+                                    <Button
+                                        isLoading={isLoading}
+                                        isDisabled={
+                                            isLoading ||
+                                            !validTxhash.test(txHash) ||
+                                            (!validAddress.test(userAddress) && userAddress !== '')
+                                        }
+                                        loadingText="loading..."
+                                        fontWeight="normal"
+                                        colorScheme="brand"
+                                        bgColor="brand.600"
+                                        maxW="80%"
+                                        mx="auto"
+                                        mb="4"
+                                        // color="brand.900"
+                                        _hover={{ bg: 'brand.500' }}
+                                        // size="md"
+                                        // height="60px"
+                                        minW="xs"
+                                        // boxShadow="lg"
+                                        fontSize="lg"
+                                        type="submit"
+                                        onClick={handleSubmit}
+                                    >
+                                        Get Interpretation
+                                    </Button>
+                                </SimpleGrid>
+                            </form>
+                        </Box>
+                        {txData.map((tx) => SingleTxComponent(tx))}
                     </Box>
                     <Box m="4">
                         {/* <VStack m="4"> */}
@@ -242,7 +245,6 @@ const IndexPage = () => {
                         {/* </VStack> */}
                     </Box>
                 </Grid>
-                {txData.map((tx) => SingleTxComponent(tx))}
             </Box>
         </Box>
     )
