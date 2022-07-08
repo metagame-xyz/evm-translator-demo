@@ -36,7 +36,7 @@ npm install --global yarn
 cp .env.example .env
 ```
 
-You'll need 3 API keys:
+You'll need 3 API keys in addition to the Mongoose key provided for you:
 
 [Covalent](https://www.covalenthq.com/platform/#/auth/register/)
 
