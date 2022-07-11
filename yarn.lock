@@ -204,6 +204,13 @@
   dependencies:
     regenerator-runtime "^0.13.4"
 
+"@babel/runtime@^7.4.5":
+  version "7.18.6"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.18.6.tgz#6a1ef59f838debd670421f8c7f2cbb8da9751580"
+  integrity sha512-t9wi7/AW6XtKahAe20Yw0/mMljKq0B1r2fPdvaAdV/KPDZewFXdaaa6K7lxmZBZ8FBNpCiAT6iHPmd6QO9bKfQ==
+  dependencies:
+    regenerator-runtime "^0.13.4"
+
 "@babel/template@^7.12.13", "@babel/template@^7.16.7":
   version "7.16.7"
   resolved "https://registry.yarnpkg.com/@babel/template/-/template-7.16.7.tgz#8d126c8701fde4d66b264b3eba3d96f07666d155"
@@ -2266,6 +2273,15 @@ damerau-levenshtein@^1.0.7:
   resolved "https://registry.yarnpkg.com/damerau-levenshtein/-/damerau-levenshtein-1.0.8.tgz#b43d286ccbd36bc5b2f7ed41caf2d0aba1f8a6e7"
   integrity sha512-sdQSFB7+llfUcQHUQO3+B8ERRj0Oa4w9POWMI/puGtuf7gFywGmkaLCElnudfTiKZV+NvHqL0ifzdrI8Ro7ESA==
 
+datadog-winston@^1.5.1:
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/datadog-winston/-/datadog-winston-1.5.1.tgz#27586a18a0333e6e58970e4654734cc31628cc0e"
+  integrity sha512-dkMFYTZp0gdF5ThKKsZUPyHrjUyAsp7ITKaoP3l61DXUqnMRUb3kMlvoI7zB+jEBBTsd/RnO+pDoOcuudo7VJA==
+  dependencies:
+    "@babel/runtime" "^7.4.5"
+    node-fetch "^2.6.0"
+    winston-transport "^4.3.0"
+
 debug@4.x, debug@^4.1.0, debug@^4.1.1, debug@^4.3.2, debug@^4.3.4:
   version "4.3.4"
   resolved "https://registry.yarnpkg.com/debug/-/debug-4.3.4.tgz#1319f6579357f2338d3337d2cdd4914bb5dcc865"
@@ -2846,10 +2862,10 @@ eventemitter3@4.0.4:
   resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-4.0.4.tgz#b5463ace635a083d018bdc7c917b4c5f10a85384"
   integrity sha512-rlaVLnVxtxvoyLsQQFBx53YmXHDxRIzzTLbdfxqi4yocpSjAxXwkU0cScM5JgSKMqEhrZpnvQ2D9gjylR0AimQ==
 
-evm-translator@^0.2.29:
-  version "0.2.29"
-  resolved "https://registry.yarnpkg.com/evm-translator/-/evm-translator-0.2.29.tgz#84c08b5d438bc5b91340d5f6b7cd258809ae78b4"
-  integrity sha512-Owv3F+Uc5hnGYBIrv16kURaHN4MFKgX3K45kMUtGHLbPBU7PcioVQGL3PhAi4DgTRD/pjG3tpba+1NiPEYZhMw==
+evm-translator@^0.2.42:
+  version "0.2.42"
+  resolved "https://registry.yarnpkg.com/evm-translator/-/evm-translator-0.2.42.tgz#6ad2f5da62eea6f567e72723a55a13b86505e22a"
+  integrity sha512-Tma7D7sOe7HOGTu5Re0H9Ukx/aW+/gbTjX0+jxKI5Sihaf1fsjynHux6vc5kSNohEBKO7A2w8nLVBH3ekLGTLQ==
   dependencies:
     "@alch/alchemy-sdk" "^1.0.3"
     "@gnosis.pm/safe-ethers-lib" "^1.1.0"
@@ -2857,6 +2873,7 @@ evm-translator@^0.2.29:
     axios "^0.26.1"
     bottleneck "^2.19.5"
     collect.js "^4.32.0"
+    datadog-winston "^1.5.1"
     eth-ens-namehash "^2.0.8"
     ethers "^5.6.2"
     limiter "^2.1.0"
@@ -3830,7 +3847,7 @@ node-fetch@2.6.6:
   dependencies:
     whatwg-url "^5.0.0"
 
-node-fetch@2.6.7, node-fetch@^2.6.6:
+node-fetch@2.6.7, node-fetch@^2.6.0, node-fetch@^2.6.6:
   version "2.6.7"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.7.tgz#24de9fba827e3b4ae44dc8b20256a379160052ad"
   integrity sha512-ZjMPFEfVx5j+y2yF35Kzx5sF7kDzxuDj6ziH4FFbOp87zKDZNx8yExJIb05OGF4Nlt9IHFIMBkRl41VdvcNdbQ==
@@ -4996,7 +5013,7 @@ which@^2.0.1:
   dependencies:
     isexe "^2.0.0"
 
-winston-transport@^4.5.0:
+winston-transport@^4.3.0, winston-transport@^4.5.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/winston-transport/-/winston-transport-4.5.0.tgz#6e7b0dd04d393171ed5e4e4905db265f7ab384fa"
   integrity sha512-YpZzcUzBedhlTAfJg6vJDlyEai/IFMIVcaEZZyl3UXIl4gmqRpU7AE89AHLkbzLUsv0NVmw7ts+iztqKxxPW1Q==
