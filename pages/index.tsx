@@ -63,7 +63,7 @@ const IndexPage = () => {
             repay: '0xdf2f782ab0296121318cca140ef069f9f074c51ff4b11f0c677bcb01126f81de',
             deposit: '0x24ee705da17a6061091880f47335d92950c72398980e271cdb9c69e8502827f4',
             withdraw: '0x8df7e436048d687edfaf351e913783729eeaa9ece741391b2a8428d6b7762fe1',
-            borrow: '0x564544c9aef01836615254504677b91a9ef96d5ae15eac50d98e08774ed1096c'
+            borrow: '0x564544c9aef01836615254504677b91a9ef96d5ae15eac50d98e08774ed1096c',
         },
         Compound_eth: {
             mint: '0xbbb448dcb3b7e7216c609a97346d9f0553a29cdc8917a286c2aa00a1ba3fccde',
@@ -75,10 +75,8 @@ const IndexPage = () => {
             borrow: '0x669b67fa88c60b07d892f09a87c24dd7bd691bdcbd7b1eb0efd969096067f1a6',
             redeem: '0x63a27f1f7e10fd37477e3e4c35986adb58daaa4b8ab541909a54cb43b0aed5aa',
             repayBorrow: '0xc5380c861d5817a30b42442f32f93cdc91e1ca395b607ec4ecd9e9cf5fc3c2b9',
-        }
+        },
     }
-
-
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -159,14 +157,15 @@ const IndexPage = () => {
         <Box m="4">
             <Box mx="auto" maxW="1280px">
                 <Grid templateColumns="2fr 1fr">
-                    <Box display='flex' flexDirection="column">
+                    <Box display="flex" flexDirection="column">
                         <Box>
                             <VStack alignItems="center" justify="center" m="4">
                                 <Heading>Query Options</Heading>
                                 <Box>
                                     <Text mx="auto" mb="2">
                                         1. Just a tx hash <br />
-                                        2. A tx hash + the user address for context (defaults to the from address) <br />
+                                        2. A tx hash + the user address for context (defaults to the from address){' '}
+                                        <br />
                                     </Text>
                                 </Box>
                             </VStack>
@@ -229,16 +228,16 @@ const IndexPage = () => {
                         {/* <VStack m="4"> */}
                         <Box>
                             <Heading size="xl">Examples</Heading>
-                            { Object.entries(testTxHashes).map(([key, methodMap]) => (
+                            {Object.entries(testTxHashes).map(([key, methodMap]) => (
                                 <>
-                                <Heading size="lg" my="2">
-                                {key}
-                            </Heading>
-                            <UnorderedList>
-                                {Object.keys(methodMap).map((functionName) =>
-                                    exampleListItem(methodMap, functionName),
-                                )}
-                            </UnorderedList>
+                                    <Heading size="lg" my="2">
+                                        {key}
+                                    </Heading>
+                                    <UnorderedList>
+                                        {Object.keys(methodMap).map((functionName) =>
+                                            exampleListItem(methodMap, functionName),
+                                        )}
+                                    </UnorderedList>
                                 </>
                             ))}
                         </Box>
