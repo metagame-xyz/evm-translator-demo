@@ -33,8 +33,8 @@ const ReactJson = dynamic(() => import('react-json-view'), { ssr: false })
 const IndexPage = () => {
     // const [txHash, setTxHash] = useState('0x11dcc41c833868064028af07fae001acdd4a46f10555be7bde959e57fd5c8e3b')
     // const [userAddress, setUserAddress] = useState('0x17A059B6B0C8af433032d554B0392995155452E6')
-    const [userAddress, setUserAddress] = useState('0x17a059b6b0c8af433032d554b0392995155452e6')
-    const [walletName, setWalletName] = useState('payment-wallet')
+    const [userAddress, setUserAddress] = useState('0x4D71BC9dB0a969A57E461524913F692A16674a43')
+    const [walletName, setWalletName] = useState('anon (MATIC)')
     const [rows, setRows] = useState<any>([])
     const [userInitiated, setUserInitiated] = useState(true)
     const [notUserInitiated, setNotUserInitiated] = useState(true)
@@ -69,18 +69,24 @@ const IndexPage = () => {
                 rows.reverse()
 
                 rows.map((row) => {
-                    // row.reviewed = null
-                    // row.ignore = null
-                    row.walletAddress = userAddress
-                    row.walletName = walletName
+                    row.reviewed = null
+                    row.ignore = null
+                    // row.walletAddress = userAddress
+                    // row.walletName = walletName
                     // row.network = networkId == 137 ? 'MATIC' : 'ETH'
                 })
+
+                // const thisYearOnly = rows.filter((row) => {
+                //     console.log('row.timestamp', row.Timestamp)
+                //     const later = new Date(row.Timestamp) < new Date(new Date().getFullYear(), 0, 1)
+                //     console.log('later', later)
+                //     return later
+                // })
 
                 setRows(rows)
                 setIsLoading(false)
             } catch (error) {
                 console.log(error)
-                debugger
                 setIsLoading(false)
             }
         }

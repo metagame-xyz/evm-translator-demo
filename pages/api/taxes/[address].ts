@@ -1,7 +1,20 @@
-import Translator, { ActivityData, chains, ZenLedgerRow } from 'evm-translator'
+import Translator, {
+    ActivityData,
+    chains,
+    DecodedTx,
+    Interpretation,
+    ZenLedgerData,
+    ZenLedgerRow,
+} from 'evm-translator'
 import { NextApiRequest, NextApiResponse } from 'next'
 
-import { ALCHEMY_PROJECT_ID, COVALENT_API_KEY, ETHERSCAN_API_KEY } from 'utils/constants'
+import {
+    ALCHEMY_PROJECT_ID,
+    COVALENT_API_KEY,
+    ETHERSCAN_API_KEY,
+    EVM_TRANSLATOR_CONNECTION_STRING,
+} from 'utils/constants'
+import getTranslator from 'utils/translator'
 
 // import TinTin from 'utils/TinTin'
 
@@ -41,21 +54,41 @@ function replaceUsdcWithUSD(rows: ZenLedgerRow[]) {
 
 const handler = async (_req: NextApiRequest, res: NextApiResponse) => {
     try {
-        const address = _req.query.address as string
+        const addressUnclean = _req.query.address as string
         const userInitiated = _req.query.userInitiated === 'true'
         const notUserInitiated = _req.query.notUserInitiated === 'true'
         const limit = parseInt(_req.query.limit as string) || 100
         const networkId = parseInt(_req.query.networkId as string) || 1
 
-        const translator = new Translator({
-            chain: networkId == 137 ? chains.polygon : chains.ethereum,
-            alchemyProjectId: ALCHEMY_PROJECT_ID,
-            etherscanAPIKey: ETHERSCAN_API_KEY,
-            covalentAPIKey: COVALENT_API_KEY,
-        })
+        const address = addressUnclean.toLowerCase()
+        const translator = await getTranslator(137, address)
 
-        // const rows = await translator.translateWithTaxData(address, userInitiated, notUserInitiated, limit)
-        const rows = []
+        const txHashArr = await translator.getTxHashArrayForAddress(address, 99999)
+
+        console.log('txHashArr:', txHashArr)
+
+        // const decodedTx = await translator.getManyDecodedTxFromDB(txHashArr)
+        const decodedTx = await translator.decodeFromTxHashArr(txHashArr, true)
+
+        console.log('decodedTx:', decodedTx.length)
+        const interpretedData = await translator.interpretDecodedTxArr(decodedTx, address)
+
+        const zipArraysToArrayOfObjects = (arr1: DecodedTx[], arr2: Interpretation[]): ZenLedgerData[] => {
+            const result = []
+            for (let i = 0; i < arr1.length; i++) {
+                result.push({
+                    decodedTx: arr1[i],
+                    interpretedData: arr2[i],
+                })
+            }
+            return result
+        }
+
+        const zenLedgerData = zipArraysToArrayOfObjects(decodedTx, interpretedData)
+
+        const rows = await translator.translateWithTaxData(zenLedgerData, address)
+
+        console.log('working')
 
         // const contractNameDB = new TinTin()
 
