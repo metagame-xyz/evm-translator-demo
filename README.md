@@ -42,11 +42,13 @@ You'll need 3 API keys in addition to the Mongoose key provided for you:
 
 [Etherscan](https://etherscan.io/register)
 
-[Alchemy](https://dashboard.alchemyapi.io/)
+<!-- [Alchemy](https://dashboard.alchemyapi.io/) Or  -->
 
-(You'll need a growth plan to access Parity's trace API on Alchemy Archive nodes. We'll add a way to put in node URL instead so you can point directly to any Archive node you have access to.)
+[QuickNode](https://quicknode.com/)
 
-If you don't have access to `trace_transaction`, please ask for an api key in the alchemy-api-key channel in our [discord](https://discord.gg/eupEsdWA)
+(You'll need a "build" plan to access Parity's trace API on QuickNode's Archive nodes. Or, you can point it directly to a node you have access to)
+
+If you don't have access to an archive node with tracing, please ask for an api key in the ask-for-api-key channel in our [discord](https://discord.gg/eupEsdWA)
 
 ## evm-translator package
 

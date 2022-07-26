@@ -1336,6 +1336,11 @@
     "@ethersproject/properties" "^5.6.0"
     "@ethersproject/strings" "^5.6.1"
 
+"@faker-js/faker@^6.2.0":
+  version "6.3.1"
+  resolved "https://registry.yarnpkg.com/@faker-js/faker/-/faker-6.3.1.tgz#1ae963dd40405450a2945408cba553e1afa3e0fb"
+  integrity sha512-8YXBE2ZcU/pImVOHX7MWrSR/X5up7t6rPWZlk34RwZEcdr3ua6X+32pSd6XuOQRN+vbuvYNfA6iey8NbrjuMFQ==
+
 "@fontsource/courier-prime@^4.5.6":
   version "4.5.6"
   resolved "https://registry.yarnpkg.com/@fontsource/courier-prime/-/courier-prime-4.5.6.tgz#ae3b7abe083b2fc244d9fc9dbd66f8def0134643"
@@ -2863,10 +2868,10 @@ eventemitter3@4.0.4:
   resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-4.0.4.tgz#b5463ace635a083d018bdc7c917b4c5f10a85384"
   integrity sha512-rlaVLnVxtxvoyLsQQFBx53YmXHDxRIzzTLbdfxqi4yocpSjAxXwkU0cScM5JgSKMqEhrZpnvQ2D9gjylR0AimQ==
 
-evm-translator@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/evm-translator/-/evm-translator-0.3.0.tgz#1dbaddffec870b06ae44affe0376d81f82be94dd"
-  integrity sha512-LWnS79ELjqt0lvcHHJm5QHsUb+yb3/Gvl0OMMBuiXlbtW1200xAca5zAmdB/nXQ9kxfVWeNIRzI9meu8S2mCqg==
+evm-translator@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/evm-translator/-/evm-translator-0.3.1.tgz#b50ea3e6382fc128adceaac83de34129355e3197"
+  integrity sha512-FsJFHT9AlxcrlNz8mx5BVltc94PxtOjsdlj7dVqEbluCb13JwA/6qIf6i9lSPgF8eYutyyF/vQ4jbS33bBmhCQ==
   dependencies:
     "@alch/alchemy-sdk" "^1.0.3"
     "@gnosis.pm/safe-ethers-lib" "^1.2.1"
@@ -2880,6 +2885,7 @@ evm-translator@^0.3.0:
     limiter "^2.1.0"
     mongoose "^6.3.4"
     node-fetch "2.6.6"
+    onoma "^0.1.1"
     require-context "^1.1.0"
     traverse "^0.6.6"
     winston "^3.7.2"
@@ -3958,6 +3964,13 @@ one-time@^1.0.0:
   integrity sha512-5DXOiRKwuSEcQ/l0kGCF6Q3jcADFv5tSmRaJck/OqkVFcOzutB134KRSfF0xDrL39MNnqxbHBbUUcjZIhTgb2g==
   dependencies:
     fn.name "1.x.x"
+
+onoma@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/onoma/-/onoma-0.1.1.tgz#8ae7c53eeafa4eee8464b7399beab3665ed3e382"
+  integrity sha512-FyVtfJ9ZjDVFC0MmrgIs08DvQ46SrSjf/YAWXRzUeUI9ecIkQBPOgBXWRy1FZG5jP9LVrLeO7B9a/cVLD4ysqA==
+  dependencies:
+    "@faker-js/faker" "^6.2.0"
 
 optionator@^0.9.1:
   version "0.9.1"
