@@ -54,51 +54,52 @@ function replaceUsdcWithUSD(rows: ZenLedgerRow[]) {
 
 const handler = async (_req: NextApiRequest, res: NextApiResponse) => {
     try {
-        const addressUnclean = _req.query.address as string
-        const userInitiated = _req.query.userInitiated === 'true'
-        const notUserInitiated = _req.query.notUserInitiated === 'true'
-        const limit = parseInt(_req.query.limit as string) || 100
-        const networkId = parseInt(_req.query.networkId as string) || 1
+        // const addressUnclean = _req.query.address as string
+        // const userInitiated = _req.query.userInitiated === 'true'
+        // const notUserInitiated = _req.query.notUserInitiated === 'true'
+        // const limit = parseInt(_req.query.limit as string) || 100
+        // const networkId = parseInt(_req.query.networkId as string) || 1
 
-        const address = addressUnclean.toLowerCase()
-        const translator = await getTranslator(137, address)
+        // const address = addressUnclean.toLowerCase()
+        // const translator = await getTranslator(137, address)
 
-        const txHashArr = await translator.getTxHashArrayForAddress(address, 99999)
+        // const txHashArr = await translator.getTxHashArrayForAddress(address, 99999)
 
-        console.log('txHashArr:', txHashArr)
+        // console.log('txHashArr:', txHashArr)
 
-        // const decodedTx = await translator.getManyDecodedTxFromDB(txHashArr)
-        const decodedTx = await translator.decodeFromTxHashArr(txHashArr, true)
+        // // const decodedTx = await translator.getManyDecodedTxFromDB(txHashArr)
+        // const decodedTx = await translator.decodeFromTxHashArr(txHashArr, true)
 
-        console.log('decodedTx:', decodedTx.length)
-        const interpretedData = await translator.interpretDecodedTxArr(decodedTx, address)
+        // console.log('decodedTx:', decodedTx.length)
+        // const interpretedData = await translator.interpretDecodedTxArr(decodedTx, address)
 
-        const zipArraysToArrayOfObjects = (arr1: DecodedTx[], arr2: Interpretation[]): ZenLedgerData[] => {
-            const result = []
-            for (let i = 0; i < arr1.length; i++) {
-                result.push({
-                    decodedTx: arr1[i],
-                    interpretedData: arr2[i],
-                })
-            }
-            return result
-        }
+        // const zipArraysToArrayOfObjects = (arr1: DecodedTx[], arr2: Interpretation[]): ZenLedgerData[] => {
+        //     const result = []
+        //     for (let i = 0; i < arr1.length; i++) {
+        //         result.push({
+        //             decodedTx: arr1[i],
+        //             interpretedData: arr2[i],
+        //         })
+        //     }
+        //     return result
+        // }
 
-        const zenLedgerData = zipArraysToArrayOfObjects(decodedTx, interpretedData)
+        // const zenLedgerData = zipArraysToArrayOfObjects(decodedTx, interpretedData)
 
-        const rows = await translator.translateWithTaxData(zenLedgerData, address)
+        // const rows = await translator.translateWithTaxData(zenLedgerData, address)
 
-        console.log('working')
+        // console.log('working')
 
-        // const contractNameDB = new TinTin()
+        // // const contractNameDB = new TinTin()
 
-        // const rowsWithContractNames = await getContractNames(rows, contractNameDB)
+        // // const rowsWithContractNames = await getContractNames(rows, contractNameDB)
 
-        replaceUsdcWithUSD(rows)
+        // replaceUsdcWithUSD(rows)
 
-        // console.log('rowsWithContractNames', rowsWithContractNames[0])
+        // // console.log('rowsWithContractNames', rowsWithContractNames[0])
 
-        res.status(200).json({ data: rows })
+        // res.status(200).json({ data: rows })
+        res.status(200).json({})
     } catch (err: any) {
         console.error(err)
         res.status(500).json({ statusCode: 500, message: err.message })

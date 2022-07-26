@@ -2,6 +2,7 @@ import Translator, { chains } from 'evm-translator'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 import { ALCHEMY_PROJECT_ID, ETHERSCAN_API_KEY, MONGOOSE_CONNECTION_STRING } from 'utils/constants'
+import getTranslator from 'utils/translator'
 
 const handler = async (_req: NextApiRequest, res: NextApiResponse) => {
     try {
@@ -11,15 +12,7 @@ const handler = async (_req: NextApiRequest, res: NextApiResponse) => {
 
         const chain = Object.values(chains).find((chain) => chain.id === networkId)
 
-        const translator = new Translator({
-            chain,
-            userAddress,
-            alchemyProjectId: ALCHEMY_PROJECT_ID,
-            etherscanAPIKey: ETHERSCAN_API_KEY,
-            connectionString: MONGOOSE_CONNECTION_STRING,
-        })
-
-        await translator.initializeMongoose()
+        const translator = await getTranslator(networkId, userAddress)
 
         const tx = await translator.allDataFromTxHash(txHash, userAddress)
 

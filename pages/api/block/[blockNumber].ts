@@ -72,55 +72,55 @@ async function getData(txHash: string, translator: Translator): Promise<any> {
 
 const handler = async (_req: NextApiRequest, res: NextApiResponse) => {
     try {
-        const blockNumber = _req.query.blockNumber as string
-        const networkId = parseInt(_req.query.networkId as string) || 1
-        const chain = Object.values(chains).find((chain) => chain.id === networkId)
+        // const blockNumber = _req.query.blockNumber as string
+        // const networkId = parseInt(_req.query.networkId as string) || 1
+        // const chain = Object.values(chains).find((chain) => chain.id === networkId)
 
-        const translator = new Translator({
-            chain,
-            alchemyProjectId: ALCHEMY_PROJECT_ID,
-            etherscanAPIKey: ETHERSCAN_API_KEY,
-            connectionString: MONGOOSE_CONNECTION_STRING,
-            etherscanServiceLevel: 30,
-        })
+        // const translator = new Translator({
+        //     chain,
+        //     alchemyProjectId: ALCHEMY_PROJECT_ID,
+        //     etherscanAPIKey: ETHERSCAN_API_KEY,
+        //     connectionString: MONGOOSE_CONNECTION_STRING,
+        //     etherscanServiceLevel: 30,
+        // })
 
-        await translator.initializeMongoose()
+        // await translator.initializeMongoose()
 
-        // const blockData = getRawDataFromBlockNumber(blockNumber)
-        // console.log(blockData)
-        // console.log('blockNumber', blockNumber)
-        // const txData = blockData.transactions[blockNumber]
-        // console.log('txData', txData)
+        // // const blockData = getRawDataFromBlockNumber(blockNumber)
+        // // console.log(blockData)
+        // // console.log('blockNumber', blockNumber)
+        // // const txData = blockData.transactions[blockNumber]
+        // // console.log('txData', txData)
 
-        // const tx = await translator.getRawTxDataWithoutTrace(txHash)
-        // const tx = translator.getRawDataFromS3Data(txData, blockData.timestamp)
+        // // const tx = await translator.getRawTxDataWithoutTrace(txHash)
+        // // const tx = translator.getRawDataFromS3Data(txData, blockData.timestamp)
 
-        const startBlock = 10000067 + 5 + 1
-        const numBlocks = 1
+        // const startBlock = 10000067 + 5 + 1
+        // const numBlocks = 1
 
-        const endBlock = startBlock + numBlocks
+        // const endBlock = startBlock + numBlocks
 
-        for (let i = startBlock; i < endBlock; i++) {
-            const txHashes = await translator.getTxHashesByBlockNumber(i.toString())
-            // const allData = []
-            // for (const txHash of txHashes) {
-            //     const data = await getData(txHash, translator)
-            //     allData.push(data)
-            //     // console.log('data', data)
-            // }
+        // for (let i = startBlock; i < endBlock; i++) {
+        //     const txHashes = await translator.getTxHashesByBlockNumber(i.toString())
+        //     // const allData = []
+        //     // for (const txHash of txHashes) {
+        //     //     const data = await getData(txHash, translator)
+        //     //     allData.push(data)
+        //     //     // console.log('data', data)
+        //     // }
 
-            timer.startTimer(`get Blocks ${i}`)
-            const promises = txHashes.map((txHash) => {
-                return getData(txHash, translator)
-            })
-            const errors = []
-            const allData = await promiseAll(promises, errors)
-            const timeElapsed = timer.stopTimer(`get Blocks ${i}`)
+        //     timer.startTimer(`get Blocks ${i}`)
+        //     const promises = txHashes.map((txHash) => {
+        //         return getData(txHash, translator)
+        //     })
+        //     const errors = []
+        //     const allData = await promiseAll(promises, errors)
+        //     const timeElapsed = timer.stopTimer(`get Blocks ${i}`)
 
-            // logInfo({}, `block ${i}: ${timeElapsed} seconds`)
+        //     // logInfo({}, `block ${i}: ${timeElapsed} seconds`)
 
-            console.log('errors', errors)
-        }
+        //     console.log('errors', errors)
+        // }
         res.status(200).json({ success: true })
         // res.status(200).json({
         //     contractAddresses,
