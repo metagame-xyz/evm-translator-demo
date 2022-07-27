@@ -1,2 +1,2 @@
-export { downloadJsonFile } from "./file";
-export * from "./json-string";
+export { downloadJsonFile } from './file'
+export * from './json-string'
