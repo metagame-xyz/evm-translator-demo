@@ -1,4 +1,4 @@
-import Translator, { chains } from 'evm-translator'
+import Translator, { chains, InterpreterMap } from 'evm-translator'
 
 import {
     ALCHEMY_PROJECT_ID,
@@ -8,7 +8,11 @@ import {
     RPC_NODE_URL,
 } from 'utils/constants'
 
-export default async function getTranslator(networkId: number, userAddress: string): Promise<Translator> {
+export default async function getTranslator(
+    networkId: number,
+    userAddress: string,
+    interpreterMap: InterpreterMap = null,
+): Promise<Translator> {
     const chain = Object.values(chains).find((chain) => chain.id === networkId)
 
     const translator = new Translator({
