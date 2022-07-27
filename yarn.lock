@@ -3045,10 +3045,10 @@ eventemitter3@4.0.4:
   resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-4.0.4.tgz#b5463ace635a083d018bdc7c917b4c5f10a85384"
   integrity sha512-rlaVLnVxtxvoyLsQQFBx53YmXHDxRIzzTLbdfxqi4yocpSjAxXwkU0cScM5JgSKMqEhrZpnvQ2D9gjylR0AimQ==
 
-evm-translator@^0.3.2:
-  version "0.3.2"
-  resolved "https://registry.yarnpkg.com/evm-translator/-/evm-translator-0.3.2.tgz#d24e19ca0478d85e5eeaf3eceeb7259b2fa41b22"
-  integrity sha512-0sZ73NX4W4vi0zU08mQvqEMzAz/xpzKppKlDXAe12qtXBtzjYFdM8uP2uEV8jZm8pYuZKHIBiCwbyVZa1EmC1g==
+evm-translator@^0.3.3:
+  version "0.3.3"
+  resolved "https://registry.yarnpkg.com/evm-translator/-/evm-translator-0.3.3.tgz#9fccfd80c80caf8c3e1daeb2a98aa6b6ceea00ae"
+  integrity sha512-YTqvczeZNx6VGvx1+8jWAAgBnBy9NTxcA1x+aE4YNx7qduiD/YGcVe748VtOVtLNww9wGDI9wEtPynoeamJkNw==
   dependencies:
     "@alch/alchemy-sdk" "^1.0.3"
     "@gnosis.pm/safe-ethers-lib" "^1.2.1"
