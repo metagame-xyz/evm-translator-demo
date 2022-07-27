@@ -6,9 +6,10 @@ import { downloadJsonFile, minifyJsonString, parseJsonSchemaString, prettifyJson
 import { IStackStyles, Stack } from '@fluentui/react'
 import Editor, { BeforeMount, OnMount, OnValidate, useMonaco } from '@monaco-editor/react'
 import dirtyJson from 'dirty-json'
+import { InterpreterMap } from 'evm-translator'
 import { useToggle } from 'hooks'
 import * as Monaco from 'monaco-editor/esm/vs/editor/editor.api'
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { SetStateAction, useCallback, useEffect, useRef, useState } from 'react'
 
 const stackStyles: IStackStyles = {
     root: {
@@ -20,11 +21,11 @@ const stackStyles: IStackStyles = {
 }
 
 interface JSONEditorProps {
-    defaultValue?: string
+    value?: string
     schemaValue?: string
     title?: string
     path?: string
-    onChange?: (value: string) => void
+    onChange?: (value: any) => void
 }
 
 interface RefObject extends Monaco.editor.ICodeEditor {
@@ -32,7 +33,7 @@ interface RefObject extends Monaco.editor.ICodeEditor {
 }
 
 export const JSONEditor: React.FC<JSONEditorProps> = ({
-    defaultValue,
+    value: passedInValue,
     schemaValue,
     title,
     path = '',
@@ -44,6 +45,8 @@ export const JSONEditor: React.FC<JSONEditorProps> = ({
 
     const [isValidJson, setIsValidJson] = useState<boolean>(false)
     const editorRef = useRef<RefObject | null>(null)
+
+    console.log('passedIn value', passedInValue)
 
     const updateEditorLayout = useCallback(() => {
         // Type BUG: editor.IDimension.width & editor.IDimension.height should be "number"
@@ -88,37 +91,37 @@ export const JSONEditor: React.FC<JSONEditorProps> = ({
         editorRef.current?.getAction('editor.action.formatDocument').run()
     }, [])
 
-    const handleEditorUpdateValue = useCallback((value?: string) => {
-        const editor = editorRef.current
-        if (!editor) return
-        editor.setValue(value || '')
-        value && editor.getAction('editor.action.formatDocument').run()
-    }, [])
+    // const handleEditorUpdateValue = useCallback((value?: string) => {
+    //     const editor = editorRef.current
+    //     if (!editor) return
+    //     editor.setValue(value || '')
+    //     value && editor.getAction('editor.action.formatDocument').run()
+    // }, [])
 
     const handleClearClick = () => editorRef.current?.setValue('')
 
     const handleEditorWillMount: BeforeMount = () => handleJsonSchemasUpdate()
 
-    const handleEditorDidMount: OnMount = (editor) => {
-        editorRef.current = editor
+    const handleEditorDidMount: OnMount = useCallback(
+        (editor) => {
+            editorRef.current = editor
 
-        editor.getModel()?.updateOptions({ tabSize: 2, insertSpaces: false })
-        updateEditorLayout()
-
-        window.addEventListener('resize', () => {
-            // automaticLayout isn't working
-            // https://github.com/suren-atoyan/monaco-react/issues/89#issuecomment-666581193
-            // clear current layout
+            editor.getModel()?.updateOptions({ tabSize: 2, insertSpaces: false })
             updateEditorLayout()
-        })
 
-        // need to use formatted prettify json string
-        defaultValue && handleEditorUpdateValue(prettifyJsonString(defaultValue))
-    }
+            window.addEventListener('resize', () => {
+                // automaticLayout isn't working
+                // https://github.com/suren-atoyan/monaco-react/issues/89#issuecomment-666581193
+                // clear current layout
+                updateEditorLayout()
+            })
+        },
+        [updateEditorLayout],
+    )
 
-    useEffect(() => {
-        handleEditorUpdateValue(defaultValue)
-    }, [defaultValue, handleEditorUpdateValue])
+    // useEffect(() => {
+    //     handleEditorUpdateValue(passedInValue)
+    // }, [passedInValue, handleEditorUpdateValue])
 
     useEffect(() => {
         handleJsonSchemasUpdate()
@@ -144,7 +147,6 @@ export const JSONEditor: React.FC<JSONEditorProps> = ({
         const fileReader = new FileReader()
         fileReader.onload = () => {
             const result = fileReader.result as string
-            handleEditorUpdateValue(result)
         }
         fileReader.readAsText(file)
     }
@@ -194,7 +196,7 @@ export const JSONEditor: React.FC<JSONEditorProps> = ({
                     grow
                     align="stretch"
                     style={{
-                        height: `calc(100% - 20vh)`,
+                        height: `calc(100% - 10vh)`,
                     }}
                 >
                     <Editor
@@ -208,6 +210,7 @@ export const JSONEditor: React.FC<JSONEditorProps> = ({
                             formatOnType: true,
                             scrollBeyondLastLine: false,
                         }}
+                        value={passedInValue}
                         onMount={handleEditorDidMount}
                         onChange={handleEditorChange}
                         beforeMount={handleEditorWillMount}
@@ -216,7 +219,7 @@ export const JSONEditor: React.FC<JSONEditorProps> = ({
                 </Stack.Item>
                 <Stack.Item
                     style={{
-                        height: `20vh`,
+                        height: `10vh`,
                     }}
                 >
                     <ErrorMessageBar errors={errors} />

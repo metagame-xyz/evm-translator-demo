@@ -63,10 +63,10 @@ export const ToolBar: React.FC<ToolBarProps> = ({
     isValidJson,
 }) => {
     const leftItems: ICommandBarItemProps[] = [
-        {
-            key: 'upload',
-            onRender: () => <FileUploader onFileHandle={onUploadClick} />,
-        },
+        // {
+        //     key: 'upload',
+        //     onRender: () => <FileUploader onFileHandle={onUploadClick} />,
+        // },
         {
             key: 'download',
             text: 'Download',

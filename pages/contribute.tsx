@@ -1,20 +1,8 @@
 import { ExternalLinkIcon } from '@chakra-ui/icons'
-import {
-    Box,
-    Button,
-    Grid,
-    Heading,
-    Input,
-    Link,
-    ListItem,
-    SimpleGrid,
-    Text,
-    UnorderedList,
-    VStack,
-} from '@chakra-ui/react'
+import { Box, Button, Grid, Heading, Input, Link, ListItem, SimpleGrid, Text, VStack } from '@chakra-ui/react'
 import { ActivityData, InterpreterMap } from 'evm-translator'
 import dynamic from 'next/dynamic'
-import { useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 import { JSONEditor } from 'components/json-editor/json-editor'
 
@@ -31,11 +19,28 @@ const IndexPage = () => {
     const [networkId, setNetworkId] = useState(1)
 
     const [contractAddress, setContractAddress] = useState('0x7a250d5630b4cf539739df2c5dacb4c659f2488d')
-    const [templateJSON, setTemplateJSON] = useState<InterpreterMap>()
+    const [templateJSON, setTemplateJSON] = useState<string>()
     const [isLoadingGetTemplate, setIsLoadingGetTemplate] = useState(false)
 
     const validTxhash = new RegExp(/^0x[a-fA-F0-9]{64}$/)
     const validAddress = new RegExp(/^0x[a-fA-F0-9]{40}$/)
+
+    const handleTemplateChange = useCallback((value) => {
+        setTemplateJSON(value)
+        if (window !== undefined) {
+            window.localStorage.setItem('templateJSON', value)
+        }
+    }, [])
+
+    useEffect(() => {
+        if (window !== undefined) {
+            const templateJSON = window.localStorage.getItem('templateJSON')
+            console.log('templateJSON', templateJSON)
+            if (templateJSON) {
+                setTemplateJSON(templateJSON)
+            }
+        }
+    }, [])
 
     const handleTxSubmit = async (e) => {
         e.preventDefault()
@@ -49,7 +54,7 @@ const IndexPage = () => {
 
         const networkString = `networkId=${networkId}&`
 
-        const interpreterMapString = `interpreterMap=${JSON.stringify(templateJSON)}&`
+        const interpreterMapString = `interpreterMap=${templateJSON}&`
 
         apiUrl = apiUrl + networkString + interpreterMapString
 
@@ -74,20 +79,12 @@ const IndexPage = () => {
             const data = (await fetch(apiUrl, { headers: { 'Content-Type': 'application/json' } }).then((res) =>
                 res.json(),
             )) as { template: InterpreterMap }
-            setTemplateJSON(data.template)
+            setTemplateJSON(JSON.stringify(data.template))
 
             console.log(data)
             // setTxData(data.txArr)
             setIsLoadingGetTemplate(false)
         }
-    }
-
-    const exampleListItem = (entityObj: Record<string, string>, functionName: string) => {
-        return (
-            <ListItem>
-                <Link onClick={() => setTxHash(entityObj[functionName])}>{functionName}</Link>
-            </ListItem>
-        )
     }
 
     const SingleTxComponent = (tx: ActivityData) => {
@@ -138,7 +135,7 @@ const IndexPage = () => {
                 <Grid templateColumns="1fr 1fr">
                     <Box display="flex" flexDirection="column">
                         <Box>
-                            <VStack alignItems="center" justify="center" m="4">
+                            <VStack alignItems="center" m="4">
                                 <Heading>Query Options</Heading>
                                 <Box>
                                     <Text mx="auto" mb="2">
@@ -204,9 +201,8 @@ const IndexPage = () => {
                         {txData.map((tx) => SingleTxComponent(tx))}
                     </Box>
                     <Box m="4">
-                        {/* <VStack m="4"> */}
-
-                        <Box>
+                        <VStack m="4">
+                            <Heading size="xl">Interpreter Map</Heading>
                             <Input
                                 placeholder="Contract Address"
                                 type="text"
@@ -239,16 +235,15 @@ const IndexPage = () => {
                             >
                                 Get Template
                             </Button>
-                            <Heading size="xl">interpreter map</Heading>
-                            <Box height="100vh">
-                                <JSONEditor
-                                    title={''}
-                                    path="input_json.json"
-                                    defaultValue={JSON.stringify(templateJSON)}
-                                />
-                            </Box>
+                        </VStack>
+                        <Box height="85vh">
+                            <JSONEditor
+                                title={''}
+                                path="input_json.json"
+                                value={templateJSON}
+                                onChange={handleTemplateChange}
+                            />
                         </Box>
-                        {/* </VStack> */}
                     </Box>
                 </Grid>
             </Box>

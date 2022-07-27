@@ -15,9 +15,14 @@ export default async function getTranslator(
 ): Promise<Translator> {
     const chain = Object.values(chains).find((chain) => chain.id === networkId)
 
+    const additionalInterpreters = {
+        [interpreterMap.contractAddress]: interpreterMap,
+    }
+
     const translator = new Translator({
         chain,
         userAddress,
+        additionalInterpreters,
         nodeUrl: RPC_NODE_URL,
         alchemyProjectId: ALCHEMY_PROJECT_ID,
         etherscanAPIKey: ETHERSCAN_API_KEY,

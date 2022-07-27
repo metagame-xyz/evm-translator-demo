@@ -11,7 +11,11 @@ const handler = async (_req: NextApiRequest, res: NextApiResponse) => {
         const networkId = parseInt(_req.query.networkId as string) || 1
         const interpreterMapStr = _req.query.interpreterMap as string
 
+        console.log(interpreterMapStr)
+
         const interpreterMap = JSON.parse(interpreterMapStr) as InterpreterMap
+
+        console.log(interpreterMap)
 
         const chain = Object.values(chains).find((chain) => chain.id === networkId)
 
