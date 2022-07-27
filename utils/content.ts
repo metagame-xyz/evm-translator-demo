@@ -10,14 +10,14 @@ export interface MetaProps {
 const description = 'translates on-chain activity'
 
 export const headMetadata: MetaProps = {
-    title: 'EVM Translator Demo',
+    title: 'evm-translator demo',
     description,
     // image: `https://${WEBSITE_URL}/site-preview.png`,
     type: 'website',
 }
 
 export const copy = {
-    title: 'EVM Translator Demo',
+    title: 'evm-translator',
     // nameLowercase: 'heartbeat',
     // heroSubheading: description,
     // heading1: 'Living, Breathing',

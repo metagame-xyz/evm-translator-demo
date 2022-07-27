@@ -38,18 +38,18 @@ function Navbar(props) {
                         size="md"
                         fontSize="lg"
                     >
-                        Get Txs
+                        Demo Txs
                     </Button>
                     <Button
-                        onClick={() => router.push('/templateGenerator')}
+                        onClick={() => router.push('/contribute')}
                         fontWeight="normal"
                         colorScheme="brand"
-                        variant={router.pathname === '/templateGenerator' ? 'solid' : 'outline'}
-                        _hover={router.pathname === '/templateGenerator' ? {} : { bg: 'brand.400' }}
+                        variant={router.pathname === '/contribute' ? 'solid' : 'outline'}
+                        _hover={router.pathname === '/contribute' ? {} : { bg: 'brand.400' }}
                         size="md"
                         fontSize="lg"
                     >
-                        Generate Template
+                        Contribute
                     </Button>
                 </HStack>
             </HStack>
