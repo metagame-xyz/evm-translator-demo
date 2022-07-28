@@ -26,9 +26,12 @@ function Navbar(props) {
             <HStack as="nav" width="100%" margin="auto" justify="center" align="center" p={4} {...props}>
                 <HStack align="center" spacing={2} pr={[0, 2]}>
                     <TwelveCircles boxSize={10} />
-                    <Heading as="h1" fontSize="34px">
-                        Metagame's evm-translator
-                    </Heading>
+
+                    <Link href="https://themetagame.xyz/" isExternal>
+                        <Heading as="h1" fontSize="34px">
+                            Metagame's evm-translator
+                        </Heading>
+                    </Link>
                 </HStack>
                 <Spacer />
                 <HStack align="center" spacing={[3, 4, 5, 6]}>
