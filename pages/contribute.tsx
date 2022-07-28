@@ -54,7 +54,10 @@ const IndexPage = () => {
 
         const networkString = `networkId=${networkId}&`
 
-        const interpreterMapString = `interpreterMap=${templateJSON}&`
+        let interpreterMapString = ''
+        if (templateJSON) {
+            interpreterMapString = `interpreterMap=${templateJSON}&`
+        }
 
         apiUrl = apiUrl + networkString + interpreterMapString
 
