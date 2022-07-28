@@ -13,7 +13,7 @@ const handler = async (_req: NextApiRequest, res: NextApiResponse) => {
 
         console.log(interpreterMapStr)
 
-        const interpreterMap = JSON.parse(interpreterMapStr) as InterpreterMap
+        const interpreterMap = interpreterMapStr ? (JSON.parse(interpreterMapStr) as InterpreterMap) : null
 
         console.log(interpreterMap)
 

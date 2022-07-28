@@ -15,9 +15,11 @@ export default async function getTranslator(
 ): Promise<Translator> {
     const chain = Object.values(chains).find((chain) => chain.id === networkId)
 
-    const additionalInterpreters: Record<string, InterpreterMap> = {
-        [interpreterMap.contractAddress]: interpreterMap,
-    }
+    const additionalInterpreters: Record<string, InterpreterMap> = interpreterMap
+        ? {
+              [interpreterMap.contractAddress]: interpreterMap,
+          }
+        : null
 
     const translator = new Translator({
         chain,
