@@ -1,6 +1,7 @@
 import { ExternalLinkIcon } from '@chakra-ui/icons'
-import { Box, Button, Grid, Heading, Input, Link, ListItem, SimpleGrid, Text, VStack } from '@chakra-ui/react'
+import { Box, Button, Grid, Heading, Input, Link, ListItem, SimpleGrid, Text, useToast, VStack } from '@chakra-ui/react'
 import { ActivityData, InterpreterMap } from 'evm-translator'
+import { InterpreterMapZ } from 'evm-translator/lib/interfaces/contractInterpreter'
 import dynamic from 'next/dynamic'
 import { useCallback, useEffect, useState } from 'react'
 
@@ -19,8 +20,10 @@ const IndexPage = () => {
     const [networkId, setNetworkId] = useState(1)
 
     const [contractAddress, setContractAddress] = useState('0x7a250d5630b4cf539739df2c5dacb4c659f2488d')
-    const [templateJSON, setTemplateJSON] = useState<string>()
+    const [templateJsonStr, setTemplateJSON] = useState<string>()
     const [isLoadingGetTemplate, setIsLoadingGetTemplate] = useState(false)
+
+    const toast = useToast()
 
     const validTxhash = new RegExp(/^0x[a-fA-F0-9]{64}$/)
     const validAddress = new RegExp(/^0x[a-fA-F0-9]{40}$/)
@@ -55,21 +58,47 @@ const IndexPage = () => {
         const networkString = `networkId=${networkId}&`
 
         let interpreterMapString = ''
-        if (templateJSON) {
-            interpreterMapString = `interpreterMap=${templateJSON}&`
+        let passedValue = null
+        if (templateJsonStr) {
+            let parsed = null
+            try {
+                parsed = InterpreterMapZ.safeParse(JSON.parse(templateJsonStr))
+            } catch (e) {
+                toast({
+                    title: 'probable Invalid JSON',
+                    description: e.message,
+                    status: 'error',
+                    duration: 5000,
+                    isClosable: true,
+                    position: 'top',
+                })
+                return
+            }
+            passedValue = parsed.success ? templateJsonStr : null
+            interpreterMapString = `interpreterMap=${passedValue}&`
         }
 
-        apiUrl = apiUrl + networkString + interpreterMapString
+        if (!templateJsonStr || passedValue) {
+            apiUrl = apiUrl + networkString + interpreterMapString
 
-        setIsLoading(true)
-        const data = (await fetch(apiUrl, { headers: { 'Content-Type': 'application/json' } }).then((res) =>
-            res.json(),
-        )) as { tx: ActivityData }
+            setIsLoading(true)
+            const data = (await fetch(apiUrl, { headers: { 'Content-Type': 'application/json' } }).then((res) =>
+                res.json(),
+            )) as { tx: ActivityData }
 
-        console.log('data', data)
+            console.log('data', data)
 
-        setTxData([data.tx])
-        setIsLoading(false)
+            setTxData([data.tx])
+            setIsLoading(false)
+        } else {
+            toast({
+                title: 'Invalid template JSON',
+                status: 'error',
+                duration: 5000,
+                isClosable: true,
+                position: 'top',
+            })
+        }
     }
 
     const handleTemplateSubmit = async (e) => {
@@ -92,7 +121,7 @@ const IndexPage = () => {
 
     const SingleTxComponent = (tx: ActivityData) => {
         return (
-            <>
+            <div key={tx.decodedTx.txHash}>
                 <Text>{tx.interpretedData.exampleDescription || 'No example description yet'}</Text>
                 <Text mx="auto" mb="2">
                     <Link isExternal href={`https://www.etherscan.io/tx/${tx.rawTxData.txReceipt.transactionHash}`}>
@@ -128,7 +157,7 @@ const IndexPage = () => {
                     displayObjectSize={false}
                     collapsed={true}
                 />
-            </>
+            </div>
         )
     }
 
@@ -238,12 +267,16 @@ const IndexPage = () => {
                             >
                                 Get Template
                             </Button>
+                            <Link isExternal href={`https://bloxy.info/address/${contractAddress}`}>
+                                bloxy for contract address
+                                <ExternalLinkIcon mx="2px" />
+                            </Link>
                         </VStack>
                         <Box height="85vh">
                             <JSONEditor
                                 title={''}
                                 path="input_json.json"
-                                value={templateJSON}
+                                value={templateJsonStr}
                                 onChange={handleTemplateChange}
                             />
                         </Box>

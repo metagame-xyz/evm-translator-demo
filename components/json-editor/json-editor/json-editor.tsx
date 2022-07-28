@@ -167,6 +167,7 @@ export const JSONEditor: React.FC<JSONEditorProps> = ({
     const handleFixClick = () => {
         const editor = editorRef.current
         const value = editor && editor.getValue()
+        debugger
         const fixedValue = value && dirtyJson.parse(value)
         const formattedValue = fixedValue && prettifyJsonString(JSON.stringify(fixedValue))
         editor && editor.setValue(formattedValue)

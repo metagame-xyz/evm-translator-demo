@@ -81,13 +81,13 @@ export const ToolBar: React.FC<ToolBarProps> = ({
         //     iconProps: { iconName: 'Delete' },
         //     onClick: onClearClick,
         // },
-        {
-            key: 'fix',
-            text: 'Fix',
-            iconProps: { iconName: 'DeveloperTools' },
-            onClick: onFixClick,
-            disabled: isValidJson,
-        },
+        // {
+        //     key: 'fix',
+        //     text: 'Fix',
+        //     iconProps: { iconName: 'DeveloperTools' },
+        //     onClick: onFixClick,
+        //     disabled: isValidJson,
+        // },
         {
             key: 'prettify',
             text: 'Prettify',
