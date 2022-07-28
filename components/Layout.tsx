@@ -3,7 +3,7 @@ import Navbar from './Navbar'
 import { Box, Flex, Spacer } from '@chakra-ui/react'
 import React from 'react'
 
-export const maxW = { xl: '1280px' }
+export const maxW = { xl: '1800' }
 
 export default function Layout(props) {
     return (

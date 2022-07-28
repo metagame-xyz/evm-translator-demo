@@ -1,3 +1,4 @@
+import { TwelveCircles } from './Icons'
 import {
     Avatar,
     Box,
@@ -6,6 +7,7 @@ import {
     Grid,
     Heading,
     HStack,
+    Link,
     Spacer,
     Stack,
     Text,
@@ -23,12 +25,22 @@ function Navbar(props) {
         <Flex width="100%" bgColor="transparent" boxShadow="md">
             <HStack as="nav" width="100%" margin="auto" justify="center" align="center" p={4} {...props}>
                 <HStack align="center" spacing={2} pr={[0, 2]}>
+                    <TwelveCircles boxSize={10} />
                     <Heading as="h1" fontSize="34px">
-                        {copy.title}
+                        Metagame's evm-translator
                     </Heading>
                 </HStack>
                 <Spacer />
                 <HStack align="center" spacing={[3, 4, 5, 6]}>
+                    <Link href="https://app.wonderverse.xyz/organization/Metagame/boards" isExternal>
+                        Wonder Bounty Board
+                    </Link>
+                    <Link href="https://github.com/metagame-xyz/evm-translator/blob/main/CONTRIBUTE.md" isExternal>
+                        contributor docs
+                    </Link>
+                    <Link href="https://github.com/metagame-xyz/evm-translator" isExternal>
+                        Github
+                    </Link>
                     <Button
                         onClick={() => router.push('/')}
                         fontWeight="normal"
