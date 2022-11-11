@@ -33,8 +33,8 @@ const ReactJson = dynamic(() => import('react-json-view'), { ssr: false })
 const IndexPage = () => {
     // const [txHash, setTxHash] = useState('0x11dcc41c833868064028af07fae001acdd4a46f10555be7bde959e57fd5c8e3b')
     // const [userAddress, setUserAddress] = useState('0x17A059B6B0C8af433032d554B0392995155452E6')
-    const [userAddress, setUserAddress] = useState('0x4D71BC9dB0a969A57E461524913F692A16674a43')
-    const [walletName, setWalletName] = useState('anon (MATIC)')
+    const [userAddress, setUserAddress] = useState('')
+    const [walletName, setWalletName] = useState('')
     const [rows, setRows] = useState<any>([])
     const [userInitiated, setUserInitiated] = useState(true)
     const [notUserInitiated, setNotUserInitiated] = useState(true)
@@ -63,7 +63,7 @@ const IndexPage = () => {
                     res.json(),
                 )
 
-                console.log('We Need this to be data', data)
+                // console.log('We Need this to be data', data)
                 const rows = data.data
 
                 rows.reverse()
@@ -186,6 +186,26 @@ const IndexPage = () => {
                 </VStack>
                 <form>
                     <SimpleGrid columns={[1, 1, 1, 1]} spacing="2" alignItems="center">
+                        <Input
+                            placeholder="Wallet Name (optional)"
+                            type="number"
+                            my="2"
+                            maxW="80%"
+                            mx="auto"
+                            borderColor="brand.400"
+                            value={networkId}
+                            onChange={(e) => setNetworkId(Number(e.currentTarget.value))}
+                        />
+                        <Input
+                            placeholder="Wallet Name (optional)"
+                            type="text"
+                            my="2"
+                            maxW="80%"
+                            mx="auto"
+                            borderColor="brand.400"
+                            value={walletName}
+                            onChange={(e) => setWalletName(e.currentTarget.value)}
+                        />
                         <Input
                             placeholder="user Address (optional)"
                             type="text"
