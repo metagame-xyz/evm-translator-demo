@@ -68,7 +68,7 @@ const handler = async (_req: NextApiRequest, res: NextApiResponse) => {
         // console.log('txHashArr:', txHashArr)
 
         let decodedTx = await translator.getManyDecodedTxFromDB(txHashArr)
-        if (!decodedTx || decodedTx.length < 1) {
+        if (txHashArr.length !== decodedTx.length) {
             decodedTx = await translator.decodeFromTxHashArr(txHashArr, true)
         }
 

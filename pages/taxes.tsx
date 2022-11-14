@@ -50,7 +50,7 @@ const IndexPage = () => {
 
         if (validAddress.test(userAddress)) {
             const initiatedString = userInitiated ? 'userInitiated=true&' : ''
-            const notInitiatedString = userInitiated ? 'notUserInitiated=true&' : ''
+            const notInitiatedString = notUserInitiated ? 'notUserInitiated=true&' : ''
             const limitString = `limit=${txLimit}&`
             const networkString = `networkId=${networkId}&`
             const apiUrl =
