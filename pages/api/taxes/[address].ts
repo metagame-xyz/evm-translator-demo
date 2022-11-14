@@ -67,10 +67,19 @@ const handler = async (_req: NextApiRequest, res: NextApiResponse) => {
 
         // console.log('txHashArr:', txHashArr)
 
-        let decodedTx = await translator.getManyDecodedTxFromDB(txHashArr)
-        if (txHashArr.length !== decodedTx.length) {
-            decodedTx = await translator.decodeFromTxHashArr(txHashArr, true)
-        }
+        const decodedTx = await translator.getManyDecodedTxFromDB(txHashArr)
+
+        // const decodedHashes = new Set(decodedTx.map((tx) => tx.txHash))
+
+        // const txHashesToDecode = txHashArr.filter((txHash) => !decodedHashes.has(txHash))
+
+        // console.log('txHashesToDecode:', txHashesToDecode)
+
+        // console.log('decodedTx length:', decodedTx.length, 'txHashArr length:', txHashArr.length)
+
+        // if (txHashArr.length !== decodedTx.length) {
+        //     decodedTx = await translator.decodeFromTxHashArr(txHashArr, true)
+        // }
 
         // console.log('decodedTx:', decodedTx.length)
         const interpretedData = await translator.interpretDecodedTxArr(decodedTx, address)
