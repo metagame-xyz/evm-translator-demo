@@ -25,12 +25,12 @@ export default async function getTranslator(
         chain,
         userAddress,
         additionalInterpreters,
-        nodeUrl: RPC_NODE_URL,
+        // nodeUrl: RPC_NODE_URL,
         alchemyProjectId: ALCHEMY_PROJECT_ID,
         etherscanAPIKey: ETHERSCAN_API_KEY,
         connectionString: EVM_TRANSLATOR_CONNECTION_STRING,
         covalentAPIKey: COVALENT_API_KEY,
-        etherscanServiceLevel: 30,
+        etherscanServiceLevel: 5,
     })
 
     await translator.initializeMongoose()

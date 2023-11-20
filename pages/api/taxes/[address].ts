@@ -65,24 +65,24 @@ const handler = async (_req: NextApiRequest, res: NextApiResponse) => {
 
         const txHashArr = await translator.getTxHashArrayForAddress(address, 99999)
 
-        // console.log('txHashArr:', txHashArr)
+        console.log('txHashArr:', txHashArr)
 
-        const decodedTx = await translator.getManyDecodedTxFromDB(txHashArr)
+        let decodedTx = await translator.getManyDecodedTxFromDB(txHashArr)
 
-        // const decodedHashes = new Set(decodedTx.map((tx) => tx.txHash))
+        const decodedHashes = new Set(decodedTx.map((tx) => tx.txHash))
 
-        // const txHashesToDecode = txHashArr.filter((txHash) => !decodedHashes.has(txHash))
+        const txHashesToDecode = txHashArr.filter((txHash) => !decodedHashes.has(txHash))
 
-        // console.log('txHashesToDecode:', txHashesToDecode)
+        console.log('txHashesToDecode:', txHashesToDecode)
 
-        // console.log('decodedTx length:', decodedTx.length, 'txHashArr length:', txHashArr.length)
+        console.log('decodedTx length:', decodedTx.length, 'txHashArr length:', txHashArr.length)
 
-        // if (txHashArr.length !== decodedTx.length) {
-        //     decodedTx = await translator.decodeFromTxHashArr(txHashArr, true)
-        // }
+        if (txHashArr.length !== decodedTx.length) {
+            decodedTx = await translator.decodeFromTxHashArr(txHashArr, true)
+        }
 
-        // console.log('decodedTx:', decodedTx.length)
         const interpretedData = await translator.interpretDecodedTxArr(decodedTx, address)
+        console.log('interpretedData:', interpretedData.length)
 
         const zipArraysToArrayOfObjects = (arr1: DecodedTx[], arr2: Interpretation[]): ZenLedgerData[] => {
             const result = []
